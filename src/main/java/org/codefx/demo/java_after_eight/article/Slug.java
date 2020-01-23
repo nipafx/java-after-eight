@@ -10,6 +10,8 @@ public class Slug {
 
 	private Slug(String value) {
 		this.value = requireNonNull(value);
+		if (value.isEmpty())
+			throw new IllegalArgumentException("Slugs can't have an empty value.");
 	}
 
 	public static Slug from(String value) {

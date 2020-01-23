@@ -10,6 +10,8 @@ public class Title {
 
 	private Title(String text) {
 		this.text = requireNonNull(text);
+		if (text.isEmpty())
+			throw new IllegalArgumentException("Titles can't have an empty text.");
 	}
 
 	public static Title from(String text) {

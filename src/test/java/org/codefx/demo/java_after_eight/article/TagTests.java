@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class TagTests {
 
@@ -42,6 +43,13 @@ class TagTests {
 		assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
+	}
+
+	@Test
+	void multipleElementsArrayWithEmptyTags_exception() {
+		String tagsText = "[$TAG ,  , $TUG  ]";
+
+		assertThatThrownBy(() -> Tag.from(tagsText)).isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

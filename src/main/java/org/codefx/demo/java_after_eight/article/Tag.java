@@ -14,6 +14,8 @@ public class Tag {
 
 	private Tag(String text) {
 		this.text = requireNonNull(text);
+		if (text.isEmpty())
+			throw new IllegalArgumentException("Tags can't have an empty text.");
 	}
 
 	public static List<Tag> from(String tagsText) {

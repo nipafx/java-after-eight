@@ -1,10 +1,16 @@
 package org.codefx.demo.java_after_eight.article;
 
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DescriptionTests {
 
-	private final TextParserTests.QuotationTests quotationTests = text -> Description.from(text).text();
+	@Test
+	void emptyText_exception() {
+		assertThatThrownBy(() -> Description.from("")).isInstanceOf(IllegalArgumentException.class);
+	}
 
 	@Nested
 	class QuotationTests implements TextParserTests.QuotationTests {

@@ -10,6 +10,8 @@ public class Description {
 
 	private Description(String text) {
 		this.text = requireNonNull(text);
+		if (text.isEmpty())
+			throw new IllegalArgumentException("Description can't have an empty text.");
 	}
 
 	public static Description from(String text) {
