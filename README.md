@@ -22,6 +22,7 @@ A preselection of Java 9-14 features that may be interesting
 	* have an interface with default methods
 	  that have to share code
 * try on effectively final resource
+* hide Utils in module
 
 ### New APIs
 

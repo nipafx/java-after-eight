@@ -13,7 +13,7 @@ public class Title {
 	}
 
 	public static Title from(String text) {
-		return new Title(text.replaceAll("^\"|\"$", ""));
+		return new Title(Utils.removeOuterQuotationMarks(text));
 	}
 
 	public String text() {

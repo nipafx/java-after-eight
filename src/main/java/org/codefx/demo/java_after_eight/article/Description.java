@@ -8,8 +8,12 @@ public class Description {
 
 	private final String text;
 
-	public Description(String text) {
+	private Description(String text) {
 		this.text = requireNonNull(text);
+	}
+
+	public static Description from(String text) {
+		return new Description(Utils.removeOuterQuotationMarks(text));
 	}
 
 	public String text() {
