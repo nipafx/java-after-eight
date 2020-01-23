@@ -1,6 +1,6 @@
 package org.codefx.demo.java_after_eight.article;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -12,11 +12,11 @@ public class Article {
 
 	private final Title title;
 	private final List<Tag> tags;
-	private final ZonedDateTime date;
+	private final LocalDate date;
 	private final Description description;
 	private final Slug slug;
 
-	public Article(Title title, List<Tag> tags, ZonedDateTime date, Description description, Slug slug) {
+	public Article(Title title, List<Tag> tags, LocalDate date, Description description, Slug slug) {
 		this.title = requireNonNull(title);
 		this.tags = requireNonNull(tags);
 		this.date = requireNonNull(date);
@@ -32,7 +32,7 @@ public class Article {
 		return tags.stream();
 	}
 
-	public ZonedDateTime date() {
+	public LocalDate date() {
 		return date;
 	}
 
