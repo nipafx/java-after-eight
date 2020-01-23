@@ -1,6 +1,5 @@
 package org.codefx.demo.java_after_eight.article;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -8,6 +7,7 @@ import java.util.stream.Stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
+// REFACTOR 14: records
 public class Tag {
 
 	private final String text;
@@ -35,6 +35,7 @@ public class Tag {
 
 	@Override
 	public boolean equals(Object o) {
+		// REFACTOR 14: pattern matching
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())

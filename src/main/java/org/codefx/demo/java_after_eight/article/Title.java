@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
+// REFACTOR 14: records
 public class Title {
 
 	private final String text;
@@ -24,6 +25,7 @@ public class Title {
 
 	@Override
 	public boolean equals(Object o) {
+		// REFACTOR 14: pattern matching
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())
