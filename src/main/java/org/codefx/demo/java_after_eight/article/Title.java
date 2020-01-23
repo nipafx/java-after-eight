@@ -8,8 +8,12 @@ public class Title {
 
 	private final String text;
 
-	public Title(String text) {
+	private Title(String text) {
 		this.text = requireNonNull(text);
+	}
+
+	public static Title from(String text) {
+		return new Title(text.replaceAll("^\"|\"$", ""));
 	}
 
 	public String text() {
