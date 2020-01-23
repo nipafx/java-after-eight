@@ -12,13 +12,15 @@ public class Article {
 	private final Title title;
 	private final List<Tag> tags;
 	private final ZonedDateTime date;
+	private final Description description;
 	private final Slug slug;
 
-	public Article(Title title, Slug slug, ZonedDateTime date, List<Tag> tags) {
+	public Article(Title title, List<Tag> tags, ZonedDateTime date, Description description, Slug slug) {
 		this.title = requireNonNull(title);
-		this.date = requireNonNull(date);
-		this.slug = requireNonNull(slug);
 		this.tags = requireNonNull(tags);
+		this.date = requireNonNull(date);
+		this.description = requireNonNull(description);
+		this.slug = requireNonNull(slug);
 	}
 
 	public Title title() {
@@ -31,6 +33,10 @@ public class Article {
 
 	public ZonedDateTime date() {
 		return date;
+	}
+
+	public Description description() {
+		return description;
 	}
 
 	public Slug slug() {
@@ -58,6 +64,7 @@ public class Article {
 				"title=" + title +
 				", tags=" + tags +
 				", date=" + date +
+				", description=" + description +
 				", slug=" + slug +
 				'}';
 	}
