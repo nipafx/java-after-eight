@@ -1,15 +1,30 @@
 package org.codefx.demo.java_after_eight.article;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 
 public class Tag {
 
 	private final String text;
 
-	public Tag(String text) {
+	private Tag(String text) {
 		this.text = requireNonNull(text);
+	}
+
+	public static List<Tag> from(String tagsText) {
+		Stream<String> tags = Stream.of(tagsText.replaceAll("^\\[|\\]$", "")
+				.split(","));
+		return tags
+				// REFACTOR 11: String::strip
+				.map(String::trim)
+				.map(Tag::new)
+				// REFACTOR 9: Collectors::toImmutableList
+				.collect(toList());
 	}
 
 	public String text() {
