@@ -8,8 +8,12 @@ public class Slug {
 
 	private final String value;
 
-	public Slug(String value) {
+	private Slug(String value) {
 		this.value = requireNonNull(value);
+	}
+
+	public static Slug from(String value) {
+		return new Slug(value);
 	}
 
 	public String value() {
