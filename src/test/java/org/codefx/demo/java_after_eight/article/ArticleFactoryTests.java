@@ -3,6 +3,7 @@ package org.codefx.demo.java_after_eight.article;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -56,21 +57,20 @@ class ArticleFactoryTests {
 	class FromFile {
 
 		@Test
-		void createFromFile_allTagsCorrect_getValidArticle() {
-			// REFACTOR 13: text blocks
-			String file = ""
-					+ "---\n"
-					+ "title: A cool blog post\n"
-					+ "tags: [$TAG, $TOG]\n"
-					+ "date: 2020-01-23\n"
-					+ "description: \"Very blog, much post, so wow\"\n"
-					+ "slug: cool-blog-post\n"
-					+ "---\n"
-					+ "\n"
-					+ "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n"
-					+ "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n"
-					+ "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n"
-					+ "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+		void createFromFile_allTagsCorrect_getValidArticle() throws IOException {
+			List<String> file = Arrays.asList(
+					"---",
+					"title: A cool blog post",
+					"tags: [$TAG, $TOG]",
+					"date: 2020-01-23",
+					"description: \"Very blog, much post, so wow\"",
+					"slug: cool-blog-post",
+					"---",
+					"",
+					"Lorem ipsum dolor sit amet.",
+					"Ut enim ad minim veniam.",
+					"Duis aute irure dolor in reprehenderit.",
+					"Excepteur sint occaecat cupidatat non proident.");
 
 			Article article = ArticleFactory.createArticle(file);
 
@@ -79,6 +79,12 @@ class ArticleFactoryTests {
 			assertThat(article.date()).isEqualTo(LocalDate.of(2020, 1, 23));
 			assertThat(article.description().text()).isEqualTo("Very blog, much post, so wow");
 			assertThat(article.slug().value()).isEqualTo("cool-blog-post");
+			assertThat(article.content().get()).containsExactly(
+					"",
+					"Lorem ipsum dolor sit amet.",
+					"Ut enim ad minim veniam.",
+					"Duis aute irure dolor in reprehenderit.",
+					"Excepteur sint occaecat cupidatat non proident.");
 		}
 
 	}

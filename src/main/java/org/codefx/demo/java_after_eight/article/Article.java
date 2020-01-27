@@ -15,13 +15,15 @@ public class Article {
 	private final LocalDate date;
 	private final Description description;
 	private final Slug slug;
+	private final Content content;
 
-	public Article(Title title, List<Tag> tags, LocalDate date, Description description, Slug slug) {
+	public Article(Title title, List<Tag> tags, LocalDate date, Description description, Slug slug, Content content) {
 		this.title = requireNonNull(title);
 		this.tags = requireNonNull(tags);
 		this.date = requireNonNull(date);
 		this.description = requireNonNull(description);
 		this.slug = requireNonNull(slug);
+		this.content = requireNonNull(content);
 	}
 
 	public Title title() {
@@ -42,6 +44,10 @@ public class Article {
 
 	public Slug slug() {
 		return slug;
+	}
+
+	public Content content() {
+		return content;
 	}
 
 	@Override
