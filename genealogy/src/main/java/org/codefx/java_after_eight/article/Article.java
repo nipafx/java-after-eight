@@ -1,8 +1,8 @@
 package org.codefx.java_after_eight.article;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
@@ -11,13 +11,13 @@ import static java.util.Objects.requireNonNull;
 public class Article {
 
 	private final Title title;
-	private final List<Tag> tags;
+	private final Set<Tag> tags;
 	private final LocalDate date;
 	private final Description description;
 	private final Slug slug;
 	private final Content content;
 
-	Article(Title title, List<Tag> tags, LocalDate date, Description description, Slug slug, Content content) {
+	Article(Title title, Set<Tag> tags, LocalDate date, Description description, Slug slug, Content content) {
 		this.title = requireNonNull(title);
 		this.tags = requireNonNull(tags);
 		this.date = requireNonNull(date);
