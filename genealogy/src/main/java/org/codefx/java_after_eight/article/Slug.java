@@ -4,18 +4,18 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
-// REFACTOR 14: records
 public class Slug implements Comparable<Slug> {
 
 	private final String value;
 
 	private Slug(String value) {
-		this.value = requireNonNull(value);
-		if (value.isEmpty())
-			throw new IllegalArgumentException("Slugs can't have an empty value.");
+		this.value = value;
 	}
 
 	static Slug from(String value) {
+		requireNonNull(value);
+		if (value.isEmpty())
+			throw new IllegalArgumentException("Slugs can't have an empty value.");
 		return new Slug(value);
 	}
 

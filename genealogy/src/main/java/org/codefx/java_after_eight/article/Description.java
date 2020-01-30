@@ -4,19 +4,20 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
-// REFACTOR 14: records
 public class Description {
 
 	private final String text;
 
 	private Description(String text) {
-		this.text = requireNonNull(text);
-		if (text.isEmpty())
-			throw new IllegalArgumentException("Description can't have an empty text.");
+		this.text = text;
 	}
 
 	static Description from(String text) {
-		return new Description(Utils.removeOuterQuotationMarks(text));
+		requireNonNull(text);
+		String unquotedText = Utils.removeOuterQuotationMarks(text).trim();
+		if (unquotedText.isEmpty())
+			throw new IllegalArgumentException("Description can't have an empty text.");
+		return new Description(text);
 	}
 
 	public String text() {

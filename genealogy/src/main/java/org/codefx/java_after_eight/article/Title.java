@@ -4,19 +4,20 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
-// REFACTOR 14: records
 public class Title {
 
 	private final String text;
 
 	private Title(String text) {
-		this.text = requireNonNull(text);
-		if (text.isEmpty())
-			throw new IllegalArgumentException("Titles can't have an empty text.");
+		this.text = text;
 	}
 
 	static Title from(String text) {
-		return new Title(Utils.removeOuterQuotationMarks(text));
+		requireNonNull(text);
+		String unquotedText = Utils.removeOuterQuotationMarks(text);
+		if (unquotedText.isEmpty())
+			throw new IllegalArgumentException("Titles can't have an empty text.");
+		return new Title(unquotedText);
 	}
 
 	public String text() {
