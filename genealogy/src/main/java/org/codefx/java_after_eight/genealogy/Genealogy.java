@@ -60,7 +60,7 @@ public class Genealogy {
 	}
 
 	// REFACTOR 14: records
-	private final class ArticleResearch {
+	private static class ArticleResearch {
 
 		final Genealogist genealogist;
 		final Articles articles;

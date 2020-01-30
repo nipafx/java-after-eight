@@ -1,5 +1,6 @@
 package org.codefx.java_after_eight.article;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -19,15 +20,15 @@ public class Tag {
 	}
 
 	static Set<Tag> from(String tagsText) {
-		Stream<String> tags = Stream.of(tagsText.replaceAll("^\\[|\\]$", "")
-				.split(","));
-		return tags
-				// REFACTOR 11: String::strip
+		Set<Tag> tags = Stream.of(tagsText
+				.replaceAll("^\\[|\\]$", "")
+				.split(","))
 				.map(String::trim)
 				.filter(tag -> !tag.isEmpty())
 				.map(Tag::new)
 				// REFACTOR 9: Collectors::toImmutableList
 				.collect(toSet());
+		return Collections.unmodifiableSet(tags);
 	}
 
 	public String text() {

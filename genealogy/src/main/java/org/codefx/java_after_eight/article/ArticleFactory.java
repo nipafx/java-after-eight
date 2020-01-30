@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 public final class ArticleFactory {
@@ -31,7 +30,7 @@ public final class ArticleFactory {
 			List<String> eagerLines = Files.readAllLines(file);
 			List<String> frontMatter = extractFrontMatter(eagerLines);
 			Content content = () -> {
-				List<String> lazyLines = Files.lines(file).collect(toList());
+				List<String> lazyLines = Files.readAllLines(file);
 				return extractContent(lazyLines).stream();
 			};
 			return createArticle(frontMatter, content);
@@ -100,11 +99,11 @@ public final class ArticleFactory {
 		if (pair.length < 2)
 			throw new IllegalArgumentException("Line doesn't seem to be a key/value pair (no colon): " + line);
 		String key = pair[0].trim().toLowerCase();
-		String value = pair[1].trim();
-		Map.Entry<String, String> keyValuePair = new AbstractMap.SimpleImmutableEntry<>(key, value);
 		if (key.isEmpty())
 			throw new IllegalArgumentException("Line \"" + line + "\" has no key.");
-		return keyValuePair;
+
+		String value = pair[1].trim();
+		return new AbstractMap.SimpleImmutableEntry<>(key, value);
 	}
 
 }
