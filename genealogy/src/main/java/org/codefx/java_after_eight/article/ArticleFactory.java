@@ -9,9 +9,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
@@ -98,13 +96,13 @@ public final class ArticleFactory {
 	}
 
 	private static Map.Entry<String, String> keyValuePairFrom(String line) {
-		String[] pair = line.split(":");
+		String[] pair = line.split(":", 2);
 		if (pair.length < 2)
 			throw new IllegalArgumentException("Line doesn't seem to be a key/value pair (no colon): " + line);
 		String key = pair[0].trim().toLowerCase();
-		String value = Stream.of(pair).skip(1).collect(joining(":")).trim();
+		String value = pair[1].trim();
 		Map.Entry<String, String> keyValuePair = new AbstractMap.SimpleImmutableEntry<>(key, value);
-		if (keyValuePair.getKey().isEmpty())
+		if (key.isEmpty())
 			throw new IllegalArgumentException("Line \"" + line + "\" has no key.");
 		return keyValuePair;
 	}
