@@ -5,7 +5,7 @@ import java.util.Objects;
 import static java.util.Objects.requireNonNull;
 
 // REFACTOR 14: records
-public class Slug {
+public class Slug implements Comparable<Slug> {
 
 	private final String value;
 
@@ -21,6 +21,11 @@ public class Slug {
 
 	public String value() {
 		return value;
+	}
+
+	@Override
+	public int compareTo(Slug right) {
+		return this.value.compareTo(right.value);
 	}
 
 	@Override
