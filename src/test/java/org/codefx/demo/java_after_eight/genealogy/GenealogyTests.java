@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static java.lang.Math.round;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GenealogyTests {
+class GenealogyTests {
 
 	private static final int TAG_SCORE_A_B = 80;
 	private static final int TAG_SCORE_A_C = 60;

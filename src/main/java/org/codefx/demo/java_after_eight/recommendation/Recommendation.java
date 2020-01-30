@@ -14,11 +14,11 @@ import static java.util.stream.Collectors.toList;
 public class Recommendation {
 
 	private final Article article;
-	private final List<Article> recommendations;
+	private final List<Article> recommendedArticles;
 
-	Recommendation(Article article, List<Article> recommendations) {
+	Recommendation(Article article, List<Article> recommendedArticles) {
 		this.article = requireNonNull(article);
-		this.recommendations = requireNonNull(recommendations);
+		this.recommendedArticles = requireNonNull(recommendedArticles);
 	}
 
 	static Recommendation from(Article article, Stream<Article> sortedRecommendations, int perArticle) {
@@ -30,8 +30,8 @@ public class Recommendation {
 		return article;
 	}
 
-	public Stream<Article> recommendations() {
-		return recommendations.stream();
+	public Stream<Article> recommendedArticles() {
+		return recommendedArticles.stream();
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class Recommendation {
 			return false;
 		Recommendation that = (Recommendation) o;
 		return article.equals(that.article) &&
-				recommendations.equals(that.recommendations);
+				recommendedArticles.equals(that.recommendedArticles);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class Recommendation {
 	public String toString() {
 		return "Recommendation{" +
 				"article=" + article.slug().value() +
-				", recommendations=" + recommendations.stream()
+				", recommendedArticles=" + recommendedArticles.stream()
 				.map(Article::slug)
 				.map(Slug::value)
 				.collect(joining(", ")) +
