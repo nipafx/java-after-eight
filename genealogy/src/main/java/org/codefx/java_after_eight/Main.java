@@ -3,6 +3,7 @@ package org.codefx.java_after_eight;
 import org.codefx.java_after_eight.article.Article;
 import org.codefx.java_after_eight.article.ArticleFactory;
 import org.codefx.java_after_eight.genealogy.Genealogist;
+import org.codefx.java_after_eight.genealogy.GenealogistService;
 import org.codefx.java_after_eight.genealogy.Genealogy;
 import org.codefx.java_after_eight.genealogy.Relation;
 import org.codefx.java_after_eight.genealogy.Weights;
@@ -62,13 +63,16 @@ public class Main {
 				.filter(file -> file.toString().endsWith(".md"))
 				.map(ArticleFactory::createArticle)
 				.collect(toList());
-		Collection<Genealogist> genealogists = getGenealogists();
+		Collection<Genealogist> genealogists = getGenealogists(articles);
 		return new Genealogy(articles, genealogists, Weights.allEqual());
 	}
 
-	private static Collection<Genealogist> getGenealogists() {
+	private static Collection<Genealogist> getGenealogists(Collection<Article> articles) {
 		List<Genealogist> genealogists = new ArrayList<>();
-		ServiceLoader.load(Genealogist.class).forEach(genealogists::add);
+		// REFACTOR 9: use stream-returning API
+		ServiceLoader
+				.load(GenealogistService.class)
+				.forEach(service -> genealogists.add(service.procure(articles)));
 		if (genealogists.isEmpty())
 			throw new IllegalArgumentException("No genealogists found.");
 		return genealogists;

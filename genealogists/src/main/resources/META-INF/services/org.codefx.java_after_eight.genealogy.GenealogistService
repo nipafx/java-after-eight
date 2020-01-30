@@ -1,0 +1,3 @@
+# REFACTOR 9: use services in module-info;
+# point out that compiler now checks what kind of service can be provided
+org.codefx.java_after_eight.genealogists.silly.SillyGenealogistService
