@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +22,7 @@ class ArticleFactoryTests {
 		/*
 		 * TODO: tests for...
 		 *  - lines without colon
-		 *  - lines with 3+ colon
+		 *  - lines with 2+ colons
 		 *  - lines with empty key
 		 *  - lines with empty value
 		 *  - missing lines
@@ -39,7 +40,7 @@ class ArticleFactoryTests {
 					"slug: cool-blog-post"
 			);
 
-			Article article = ArticleFactory.createArticle(frontMatter);
+			Article article = ArticleFactory.createArticle(frontMatter, () -> Stream.empty());
 
 			assertThat(article.title().text()).isEqualTo("A cool blog post");
 			assertThat(article.tags()).extracting(Tag::text).containsExactlyInAnyOrder("$TAG", "$TOG");

@@ -15,7 +15,7 @@ public class Title {
 			throw new IllegalArgumentException("Titles can't have an empty text.");
 	}
 
-	public static Title from(String text) {
+	static Title from(String text) {
 		return new Title(Utils.removeOuterQuotationMarks(text));
 	}
 

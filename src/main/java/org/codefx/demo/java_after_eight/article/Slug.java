@@ -15,7 +15,7 @@ public class Slug {
 			throw new IllegalArgumentException("Slugs can't have an empty value.");
 	}
 
-	public static Slug from(String value) {
+	static Slug from(String value) {
 		return new Slug(value);
 	}
 

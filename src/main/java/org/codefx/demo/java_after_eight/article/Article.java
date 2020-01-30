@@ -17,7 +17,7 @@ public class Article {
 	private final Slug slug;
 	private final Content content;
 
-	public Article(Title title, List<Tag> tags, LocalDate date, Description description, Slug slug, Content content) {
+	Article(Title title, List<Tag> tags, LocalDate date, Description description, Slug slug, Content content) {
 		this.title = requireNonNull(title);
 		this.tags = requireNonNull(tags);
 		this.date = requireNonNull(date);

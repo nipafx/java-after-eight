@@ -26,9 +26,12 @@ public final class ArticleFactory {
 	}
 
 	public static Article createArticle(Path file) throws IOException {
-		List<String> articleLines = Files.lines(file).collect(toList());
-		List<String> frontMatter = extractFrontMatter(articleLines);
-		Content content = () -> extractContent(articleLines).stream();
+		List<String> eagerLines = Files.lines(file).collect(toList());
+		List<String> frontMatter = extractFrontMatter(eagerLines);
+		Content content = () -> {
+			List<String> lazyLines = Files.lines(file).collect(toList());
+			return extractContent(lazyLines).stream();
+		};
 		return createArticle(frontMatter, content);
 	}
 

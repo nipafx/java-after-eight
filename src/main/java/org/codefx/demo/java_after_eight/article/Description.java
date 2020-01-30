@@ -15,7 +15,7 @@ public class Description {
 			throw new IllegalArgumentException("Description can't have an empty text.");
 	}
 
-	public static Description from(String text) {
+	static Description from(String text) {
 		return new Description(Utils.removeOuterQuotationMarks(text));
 	}
 

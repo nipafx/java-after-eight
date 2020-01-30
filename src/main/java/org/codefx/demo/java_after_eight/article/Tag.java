@@ -18,7 +18,7 @@ public class Tag {
 			throw new IllegalArgumentException("Tags can't have an empty text.");
 	}
 
-	public static List<Tag> from(String tagsText) {
+	static List<Tag> from(String tagsText) {
 		Stream<String> tags = Stream.of(tagsText.replaceAll("^\\[|\\]$", "")
 				.split(","));
 		return tags
