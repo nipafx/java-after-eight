@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
-// REFACTOR 14: record
 public class Relation {
 
 	private final Article article1;
@@ -25,7 +24,6 @@ public class Relation {
 	}
 
 	static Relation aggregate(Stream<TypedRelation> typedRelations, Weights weights) {
-		// REFACTOR 12: Collectors::teeing
 		return typedRelations
 				.map(relation -> new UnfinishedRelation(relation, weights.weightOf(relation.type())))
 				.reduce(UnfinishedRelation::fold)

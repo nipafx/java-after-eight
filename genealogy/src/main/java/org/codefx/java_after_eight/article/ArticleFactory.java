@@ -48,7 +48,6 @@ public final class ArticleFactory {
 	}
 
 	private static List<String> extractFrontMatter(List<String> markdownFile) {
-		// REFACTOR 9: Stream::dropWhile, Stream::takeWhile
 		List<String> frontMatter = new ArrayList<>();
 		boolean frontMatterStarted = false;
 		for (String line : markdownFile) {
@@ -64,7 +63,6 @@ public final class ArticleFactory {
 	}
 
 	private static List<String> extractContent(List<String> markdownFile) {
-		// REFACTOR 9: Stream::dropWhile, Stream::takeWhile (also drop leading empty lines)
 		List<String> content = new ArrayList<>();
 		boolean frontMatterStarted = false;
 		boolean contentStarted = false;
@@ -81,7 +79,6 @@ public final class ArticleFactory {
 	}
 
 	public static Article createArticle(List<String> frontMatter, Content content) {
-		// REFACTOR 14: use a record instead of abusing Map.Entry
 		Map<String, String> entries = frontMatter.stream()
 				.map(ArticleFactory::keyValuePairFrom)
 				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue));

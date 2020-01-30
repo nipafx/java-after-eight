@@ -15,7 +15,6 @@ class WeightsTests {
 
 	@Test
 	void nullRelationType_throwsException() {
-		// REFACTOR 9: collection factories
 		Map<RelationType, Double> weightMap = new HashMap<>();
 		weightMap.put(null, 1.0);
 		assertThatThrownBy(() -> Weights.from(weightMap, 0.5)).isInstanceOf(NullPointerException.class);
@@ -23,7 +22,6 @@ class WeightsTests {
 
 	@Test
 	void nullWeight_throwsException() {
-		// REFACTOR 9: collection factories
 		Map<RelationType, Double> weightMap = new HashMap<>();
 		weightMap.put(TAG_TYPE, null);
 		assertThatThrownBy(() -> Weights.from(weightMap, 0.5)).isInstanceOf(NullPointerException.class);
@@ -31,7 +29,6 @@ class WeightsTests {
 
 	@Test
 	void knownRelationType_returnsWeight() {
-		// REFACTOR 9: collection factories
 		Map<RelationType, Double> weightMap = new HashMap<>();
 		weightMap.put(TAG_TYPE, 0.42);
 		Weights weights = Weights.from(weightMap, 0.5);
@@ -41,7 +38,6 @@ class WeightsTests {
 
 	@Test
 	void unknownRelationType_returnsDefaultWeight() {
-		// REFACTOR 9: collection factories
 		Map<RelationType, Double> weightMap = new HashMap<>();
 		weightMap.put(TAG_TYPE, 0.42);
 		Weights weights = Weights.from(weightMap, 0.5);

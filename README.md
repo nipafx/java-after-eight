@@ -2,52 +2,146 @@
 
 Nice Java 8 code base that gets way nicer with Java 9-14.
 
-## Possible Java 9+ features
 
-A preselection of Java 9-14 features that may be interesting 
+## Applicable Java 9+ features
 
-### Language features
+* general tip: use [sdkman](https://sdkman.io/)
+* \u2001 (" ") is the culprit ~> 2001 - Odyssey in Space
 
-* records
-* text block
-	* in tests, maybe XML?
-	* String::indent
-* switch expressions
-	* something with fall-through
-		* intentional ~> multiple labels
-		* with `break` ~> remove `break`
-	* over strings or enums
+### Java 9
+
+#### Module system
+
+* strong encapsulation:
+	* in _genealogy_:
+		* move `Genealagist` and `GenealogistService` into new package `genealogist`
+		* export `genealogist` and `articles`
+	* in _genealogist_:
+		* export nothing
+* services:
+	* update _genealogy_ and _genealogist_ accordingly
+	* in `Main::getGenealogists`, use `ServiceLoader::stream`
+	* point out that compiler now checks what kind of service can be provided
+* debugging: show module name and versions in stack traces
+
+#### Language
+
+#### APIs
+
+* collection factories:
+	* search `Arrays.asList` (better because truly immutable)
+	* creation of field `weights` in `GenealogyTests` and `RelationTests` (remove constructors)
+	* all four `weightMap`s in `WeightsTests`
+	* in `Weights::allEqual`
+* `Stream`:
+	* in `ArticleFactory::extractFrontMatter` and `extractContent` use `Stream::dropWhile` and `Stream::takeWhile`
+
+### Java 10
+
+#### Language
+
 * `var`
+	* obvious / inconsequential:
+		* `TagGenealogist::infer` for `Set<Tag>`
+		* `Description::from`, `Title::from`
+		* `Tag::from`, `Recommendation::from`
+		* all over `Main`, `TagTests`, `TextParserTests`
+		* test methods in `GenealogyTests`, `RelationTests`, `WeightTests`, `RecommenderTests`
+	* discussion:
+		* `ArticleFactory::createArticle` and `keyValuePairFrom`
+
+#### APIs
+
+* collection factories:
+	* in `Weights` constructor use `Map::copyOf` (also remove following null checks)
+* `Collectors::toUnmodfiable...`: search `toList()`, `toMap(`, `toSet()`
+* `Stream`:
+	* in `Tag::from` use `Collectors::toUnmodifiableList`
+
+#### JVM
+
+* Application Class-Data Sharing
+	* create CDS
+	* create AppCDS
+
+### Java 11
+
+* `String::strip` fixes recommendations for _Code-First Java 9 Tutorial_ (compare tags to _Java 9 Resources - Talks, Articles, Repos, Blogs, Books And Courses_):
+	* replace all `String::trim` with `strip`
+	* replace `String::isEmpty` with `isBlank`
+* in `Tag::from` stream pipeline use `Predicate::not`
+
+### Java 12
+
+* try `Collectors::teeing` in `Relation::aggregate`
+* CDS archive for JDK classes is included
+
+### Java 13
+
+* text blocks in `Main::recommendationsToJson`
+* AppCDS archive automatically generated
+* use `String::formatted` instead of `String::format`
+
+### Java 14
+
+* records:
+	* counterpoint: `Weights` does not expose its fields
+	* customized constructor:
+		* `Article`
+	* static factories, non-public simple constructor:
+		* `Description`
+		* `Slug`
+		* `Title`
+		* `RelationType`
+	* static factories, customized constructor:
+		* `Tag`
+		* `Relation`
+		* `TypedRelation`
+	* custom getter:
+		* `Article` for tags
+		* Recommendation for recommended articles
+	* custom `equals`:
+		* `Article` (just slug)
+	* class-local:
+		* replace `Map.Entry` in `ArticleFactory::createArticle`
+		* `Relation.UnfinishedRelation`
+	* method-local: `Genealogy::inferTypedRelations`
+* pattern matching in equals
+* helpful NPE messages:
+	* remove description from an article
+	* add command line flag
+
+
+## Additional Java 9+ features
+
+### Java 9
+
+* try with resources
 * private interface methods
-	* have an interface with default methods
-	  that have to share code
-* try on effectively final resource
-* hide Utils in module
+* `Optional::or`, `ifPresentOrElse`, `stream`
+* OS process API (TODO: log current PID)
+* Java version API (TODO: log Java version)
+* stack walking TODO: use Log4J 2)
+* unified logging
+* MR JARs
+* String performance improvements
 
-### New APIs
+### Java 11
 
-* HTTP/2 client
-	* project could use OkHttp, we replace
-* version API
-* collection factories
+* `String::repeat` and `String::lines`
+* `Optional::isEmpty`
+* reactive HTTP/2 client (TODO: post results somewhere; project could use OkHttp, we replace)
+* launch source files
 
-### Updates APIs
+### Java 12
 
-* String: lines, repeat, transform, formatted
-* Stream: flatMap collector, teeingCollector, dropWhile, takeWhile
-* NumberFormat.getCompactNumberInstance
-* CompletableFuture: error recovery
-* Predicate: not
-* Optional: or
+* switch expressions (TODO: how?)
+* `String::indent` and `String::transform`
+* `CompletableFuture::exceptionallyCompose` - TODO:
+	* read input/output paths from local config file
+	* if it does not exist, read from config file in user directory
+* `NumberFormat::getCompactNumberInstance` (TODO: log word count per article in short format)
 
-### Misc
+### Java 13
 
-* performance
-	* (Graal VM - not specific to 9+)
-	* AppCDS
-	* log framework that uses StackWalking API
-		* microbenchmark a hot loop with a log command
-	* string improvements
-* debugging
-	* helpful NPE
-	* module versions in stack traces
+* switch expressions use `yield`

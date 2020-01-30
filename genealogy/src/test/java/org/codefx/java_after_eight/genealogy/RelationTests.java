@@ -21,7 +21,6 @@ class RelationTests {
 	private final RelationType tagRelation = RelationType.from("tag");
 	private final RelationType linkRelation = RelationType.from("link");
 
-	// REFACTOR 9: collection factories (remove constructor)
 	private final Weights weights;
 
 	RelationTests() {

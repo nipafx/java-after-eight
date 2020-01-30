@@ -9,7 +9,6 @@ public class Weights {
 	private final double defaultWeight;
 
 	private Weights(Map<RelationType, Double> weights, double defaultWeight) {
-		// REFACTOR 10: Map::copyOf
 		this.weights = new HashMap<>(weights);
 		if (this.weights.entrySet().stream().anyMatch(entry -> entry.getKey() == null || entry.getValue() == null))
 			throw new NullPointerException("Neither relation type nor weight can be null.");

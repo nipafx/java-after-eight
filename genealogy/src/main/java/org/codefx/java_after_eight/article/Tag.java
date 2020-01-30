@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toSet;
 
-// REFACTOR 14: records
 public class Tag {
 
 	private final String text;
@@ -26,7 +25,6 @@ public class Tag {
 				.map(String::trim)
 				.filter(tag -> !tag.isEmpty())
 				.map(Tag::new)
-				// REFACTOR 9: Collectors::toImmutableList
 				.collect(toSet());
 		return Collections.unmodifiableSet(tags);
 	}
@@ -37,7 +35,6 @@ public class Tag {
 
 	@Override
 	public boolean equals(Object o) {
-		// REFACTOR 14: pattern matching
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())

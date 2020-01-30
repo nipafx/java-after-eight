@@ -30,7 +30,6 @@ class ArticleFactoryTests {
 
 		@Test
 		void createFromFrontMatter_multipleColons_getValidArticle() {
-			// REFACTOR 9: collection factories
 			List<String> frontMatter = Arrays.asList(
 					"title: Cool: A blog post",
 					"tags: [$TAG, $TOG]",
@@ -50,7 +49,6 @@ class ArticleFactoryTests {
 
 		@Test
 		void createFromFrontMatter_allTagsCorrect_getValidArticle() {
-			// REFACTOR 9: collection factories
 			List<String> frontMatter = Arrays.asList(
 					"title: A cool blog post",
 					"tags: [$TAG, $TOG]",

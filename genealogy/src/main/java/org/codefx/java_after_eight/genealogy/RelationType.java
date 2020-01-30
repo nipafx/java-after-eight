@@ -29,7 +29,6 @@ public class RelationType {
 
 	@Override
 	public boolean equals(Object o) {
-		// REFACTOR 14: pattern matching
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())

@@ -46,7 +46,6 @@ public class Genealogy {
 				.map(ArticleResearch::infer);
 	}
 
-	// REFACTOR 14: records
 	private static class Articles {
 
 		final Article article1;
@@ -59,7 +58,6 @@ public class Genealogy {
 
 	}
 
-	// REFACTOR 14: records
 	private static class ArticleResearch {
 
 		final Genealogist genealogist;

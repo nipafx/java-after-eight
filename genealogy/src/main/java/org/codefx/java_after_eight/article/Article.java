@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
-// REFACTOR 14: records
 public class Article {
 
 	private final Title title;
@@ -52,7 +51,6 @@ public class Article {
 
 	@Override
 	public boolean equals(Object o) {
-		// REFACTOR 14: pattern matching
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())

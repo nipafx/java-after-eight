@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
-// REFACTOR 14: record
 public class TypedRelation {
 
 	private final Article article1;

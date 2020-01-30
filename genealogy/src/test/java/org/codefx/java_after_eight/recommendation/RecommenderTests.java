@@ -32,7 +32,6 @@ class RecommenderTests {
 				Stream.of(relation_AC),
 				1);
 
-		// REFACTOR 9: collection factories
 		assertThat(recommendations).containsExactlyInAnyOrder(
 				new Recommendation(articleA, Arrays.asList(articleC)));
 	}
@@ -43,7 +42,6 @@ class RecommenderTests {
 				Stream.of(relation_AB, relation_AC),
 				1);
 
-		// REFACTOR 9: collection factories
 		assertThat(recommendations).containsExactlyInAnyOrder(
 				new Recommendation(articleA, Arrays.asList(articleB)));
 	}
@@ -54,7 +52,6 @@ class RecommenderTests {
 				Stream.of(relation_AC, relation_BC, relation_CB),
 				1);
 
-		// REFACTOR 9: collection factories
 		assertThat(recommendations).containsExactlyInAnyOrder(
 				new Recommendation(articleA, Arrays.asList(articleC)),
 				new Recommendation(articleB, Arrays.asList(articleC)),
@@ -68,7 +65,6 @@ class RecommenderTests {
 				Stream.of(relation_AB, relation_AC, relation_BA, relation_BC, relation_CA, relation_CB),
 				1);
 
-		// REFACTOR 9: collection factories
 		assertThat(recommendations).containsExactlyInAnyOrder(
 				new Recommendation(articleA, Arrays.asList(articleB)),
 				new Recommendation(articleB, Arrays.asList(articleC)),

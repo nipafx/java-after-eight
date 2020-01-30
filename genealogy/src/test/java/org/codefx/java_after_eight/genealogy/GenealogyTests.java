@@ -43,7 +43,6 @@ class GenealogyTests {
 	private final Genealogist linkGenealogist = (article1, article2) ->
 			TypedRelation.from(article1, article2, linkRelation, linkScore(article1, article2));
 
-	// REFACTOR 9: collection factories (remove constructor)
 	private final Weights weights;
 
 	GenealogyTests() {
@@ -91,7 +90,6 @@ class GenealogyTests {
 
 	@Test
 	void oneGenealogist_twoArticles() {
-		// REFACTOR 9: collection factories
 		Genealogy genealogy = new Genealogy(
 				Arrays.asList(articleA, articleB),
 				Arrays.asList(tagGenealogist),
@@ -107,7 +105,6 @@ class GenealogyTests {
 
 	@Test
 	void otherGenealogist_twoArticles() {
-		// REFACTOR 9: collection factories
 		Genealogy genealogy = new Genealogy(
 				Arrays.asList(articleA, articleB),
 				Arrays.asList(linkGenealogist),
@@ -123,7 +120,6 @@ class GenealogyTests {
 
 	@Test
 	void oneGenealogist_threeArticles() {
-		// REFACTOR 9: collection factories
 		Genealogy genealogy = new Genealogy(
 				Arrays.asList(articleA, articleB, articleC),
 				Arrays.asList(tagGenealogist),
@@ -143,7 +139,6 @@ class GenealogyTests {
 
 	@Test
 	void twoGenealogists_threeArticles() {
-		// REFACTOR 9: collection factories
 		Genealogy genealogy = new Genealogy(
 				Arrays.asList(articleA, articleB, articleC),
 				Arrays.asList(tagGenealogist, linkGenealogist),

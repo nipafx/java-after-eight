@@ -69,7 +69,6 @@ public class Main {
 
 	private static Collection<Genealogist> getGenealogists(Collection<Article> articles) {
 		List<Genealogist> genealogists = new ArrayList<>();
-		// REFACTOR 9: use stream-returning API
 		ServiceLoader
 				.load(GenealogistService.class)
 				.forEach(service -> genealogists.add(service.procure(articles)));
@@ -79,7 +78,6 @@ public class Main {
 	}
 
 	private static String recommendationsToJson(Stream<Recommendation> recommendations) {
-		// REFACTOR 13: text blocks
 		String frame = "[\n$RECOMMENDATIONS\n]";
 		String recommendation = "" +
 				"\t{" +
