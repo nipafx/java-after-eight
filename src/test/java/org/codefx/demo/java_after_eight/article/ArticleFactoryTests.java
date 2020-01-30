@@ -22,12 +22,31 @@ class ArticleFactoryTests {
 		/*
 		 * TODO: tests for...
 		 *  - lines without colon
-		 *  - lines with 2+ colons
 		 *  - lines with empty key
 		 *  - lines with empty value
 		 *  - missing lines
 		 *  - superfluous lines
 		 */
+
+		@Test
+		void createFromFrontMatter_multipleColons_getValidArticle() {
+			// REFACTOR 9: collection factories
+			List<String> frontMatter = Arrays.asList(
+					"title: Cool: A blog post",
+					"tags: [$TAG, $TOG]",
+					"date: 2020-01-23",
+					"description: \"Very blog, much post, so wow\"",
+					"slug: cool-blog-post"
+			);
+
+			Article article = ArticleFactory.createArticle(frontMatter, Stream::empty);
+
+			assertThat(article.title().text()).isEqualTo("Cool: A blog post");
+			assertThat(article.tags()).extracting(Tag::text).containsExactlyInAnyOrder("$TAG", "$TOG");
+			assertThat(article.date()).isEqualTo(LocalDate.of(2020, 1, 23));
+			assertThat(article.description().text()).isEqualTo("Very blog, much post, so wow");
+			assertThat(article.slug().value()).isEqualTo("cool-blog-post");
+		}
 
 		@Test
 		void createFromFrontMatter_allTagsCorrect_getValidArticle() {
@@ -40,7 +59,7 @@ class ArticleFactoryTests {
 					"slug: cool-blog-post"
 			);
 
-			Article article = ArticleFactory.createArticle(frontMatter, () -> Stream.empty());
+			Article article = ArticleFactory.createArticle(frontMatter, Stream::empty);
 
 			assertThat(article.title().text()).isEqualTo("A cool blog post");
 			assertThat(article.tags()).extracting(Tag::text).containsExactlyInAnyOrder("$TAG", "$TOG");

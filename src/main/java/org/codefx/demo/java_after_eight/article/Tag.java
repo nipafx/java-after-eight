@@ -24,6 +24,7 @@ public class Tag {
 		return tags
 				// REFACTOR 11: String::strip
 				.map(String::trim)
+				.filter(tag -> !tag.isEmpty())
 				.map(Tag::new)
 				// REFACTOR 9: Collectors::toImmutableList
 				.collect(toList());

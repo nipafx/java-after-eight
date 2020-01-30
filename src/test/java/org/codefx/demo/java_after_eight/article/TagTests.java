@@ -10,6 +10,18 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class TagTests {
 
 	@Test
+	void emptyElementArray_emptyTag() {
+		String tagsText = "[ ]";
+		String[] expectedTags = { };
+
+		List<Tag> tags = Tag.from(tagsText);
+
+		assertThat(tags)
+				.extracting(Tag::text)
+				.containsExactlyInAnyOrder(expectedTags);
+	}
+
+	@Test
 	void singleElementArray_singleTag() {
 		String tagsText = "[$TAG]";
 		String[] expectedTags = { "$TAG" };
@@ -48,8 +60,13 @@ class TagTests {
 	@Test
 	void multipleElementsArrayWithEmptyTags_exception() {
 		String tagsText = "[$TAG ,  , $TUG  ]";
+		String[] expectedTags = { "$TAG", "$TUG" };
 
-		assertThatThrownBy(() -> Tag.from(tagsText)).isInstanceOf(IllegalArgumentException.class);
+		List<Tag> tags = Tag.from(tagsText);
+
+		assertThat(tags)
+				.extracting(Tag::text)
+				.containsExactlyInAnyOrder(expectedTags);
 	}
 
 }
