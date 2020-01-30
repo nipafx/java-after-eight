@@ -18,7 +18,7 @@ public class RelationType {
 			throw new IllegalArgumentException("Relation types can't have an empty value.");
 	}
 
-	static RelationType from(String value) {
+	public static RelationType from(String value) {
 		return new RelationType(value);
 	}
 

@@ -3,7 +3,7 @@ package org.codefx.demo.java_after_eight.genealogy;
 import java.util.HashMap;
 import java.util.Map;
 
-class Weights {
+public class Weights {
 
 	private final Map<RelationType, Double> weights;
 	private final double defaultWeight;
@@ -18,6 +18,10 @@ class Weights {
 
 	public static Weights from(Map<RelationType, Double> weights, double defaultWeight) {
 		return new Weights(weights, defaultWeight);
+	}
+
+	public static Weights allEqual() {
+		return new Weights(new HashMap<>(), 1);
 	}
 
 	public double weightOf(RelationType genealogistType) {

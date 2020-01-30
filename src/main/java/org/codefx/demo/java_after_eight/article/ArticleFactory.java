@@ -1,6 +1,7 @@
 package org.codefx.demo.java_after_eight.article;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -27,14 +28,20 @@ public final class ArticleFactory {
 		// private constructor to prevent accidental instantiation of utility class
 	}
 
-	public static Article createArticle(Path file) throws IOException {
-		List<String> eagerLines = Files.lines(file).collect(toList());
-		List<String> frontMatter = extractFrontMatter(eagerLines);
-		Content content = () -> {
-			List<String> lazyLines = Files.lines(file).collect(toList());
-			return extractContent(lazyLines).stream();
-		};
-		return createArticle(frontMatter, content);
+	public static Article createArticle(Path file) throws UncheckedIOException {
+		try {
+			List<String> eagerLines = Files.readAllLines(file);
+			List<String> frontMatter = extractFrontMatter(eagerLines);
+			Content content = () -> {
+				List<String> lazyLines = Files.lines(file).collect(toList());
+				return extractContent(lazyLines).stream();
+			};
+			return createArticle(frontMatter, content);
+		} catch (IOException ex) {
+			throw new UncheckedIOException("Creating article failed: " + file, ex);
+		} catch (RuntimeException ex) {
+			throw new RuntimeException("Creating article failed: " + file, ex);
+		}
 	}
 
 	public static Article createArticle(List<String> fileLines) {
