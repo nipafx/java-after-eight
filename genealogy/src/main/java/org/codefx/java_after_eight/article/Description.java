@@ -17,7 +17,7 @@ public class Description {
 		String unquotedText = Utils.removeOuterQuotationMarks(text).trim();
 		if (unquotedText.isEmpty())
 			throw new IllegalArgumentException("Description can't have an empty text.");
-		return new Description(text);
+		return new Description(unquotedText);
 	}
 
 	public String text() {
