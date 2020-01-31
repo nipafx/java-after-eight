@@ -18,7 +18,7 @@ public class Weights {
 	}
 
 	public static Weights allEqual() {
-		return new Weights(new HashMap<>(), 1);
+		return new Weights(Map.of(), 1);
 	}
 
 	public double weightOf(RelationType genealogistType) {

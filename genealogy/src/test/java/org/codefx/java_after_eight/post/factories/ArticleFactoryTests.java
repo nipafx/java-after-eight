@@ -6,7 +6,6 @@ import org.codefx.java_after_eight.post.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +14,7 @@ class ArticleFactoryTests {
 
 	@Test
 	void createFromFrontMatter_multipleColons_getValidArticle() {
-		List<String> file = Arrays.asList(
+		List<String> file = List.of(
 				"---",
 				"title: Cool: A blog post",
 				"tags: [$TAG, $TOG]",
@@ -37,7 +36,7 @@ class ArticleFactoryTests {
 
 	@Test
 	void createFromFrontMatter_allTagsCorrect_getValidArticle() {
-		List<String> file = Arrays.asList(
+		List<String> file = List.of(
 				"---",
 				"title: A cool blog post",
 				"tags: [$TAG, $TOG]",
@@ -59,7 +58,7 @@ class ArticleFactoryTests {
 
 	@Test
 	void createFromFile_allTagsCorrect_getValidArticle() {
-		List<String> file = Arrays.asList(
+		List<String> file = List.of(
 				"---",
 				"title: A cool blog post",
 				"tags: [$TAG, $TOG]",

@@ -5,7 +5,6 @@ import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -36,7 +35,7 @@ public final class Utils {
 
 	public static <T> void uncheckedFilesWrite(Path path, String content) {
 		try {
-			Files.write(path, Arrays.asList(content), StandardCharsets.UTF_8);
+			Files.write(path, List.of(content), StandardCharsets.UTF_8);
 		} catch (IOException ex) {
 			throw new UncheckedIOException(ex);
 		}

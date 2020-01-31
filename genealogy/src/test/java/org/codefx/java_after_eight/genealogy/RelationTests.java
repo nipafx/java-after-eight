@@ -6,7 +6,6 @@ import org.codefx.java_after_eight.genealogist.RelationType;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -24,14 +23,11 @@ class RelationTests {
 	private final RelationType tagRelation = new RelationType("tag");
 	private final RelationType linkRelation = new RelationType("link");
 
-	private final Weights weights;
-
-	RelationTests() {
-		Map<RelationType, Double> weights = new HashMap<>();
-		weights.put(tagRelation, TAG_WEIGHT);
-		weights.put(linkRelation, LINK_WEIGHT);
-		this.weights = new Weights(weights, 0.5);
-	}
+	private final Weights weights = new Weights(
+			Map.of(
+					tagRelation, TAG_WEIGHT,
+					linkRelation, LINK_WEIGHT),
+			0.5);
 
 	/*
 	 * TODO: various failure states

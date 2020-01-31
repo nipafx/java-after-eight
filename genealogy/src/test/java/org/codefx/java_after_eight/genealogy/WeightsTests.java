@@ -30,18 +30,14 @@ class WeightsTests {
 
 	@Test
 	void knownRelationType_returnsWeight() {
-		Map<RelationType, Double> weightMap = new HashMap<>();
-		weightMap.put(TAG_TYPE, 0.42);
-		Weights weights = new Weights(weightMap, 0.5);
+		Weights weights = new Weights(Map.of(TAG_TYPE, 0.42), 0.5);
 
 		assertThat(weights.weightOf(TAG_TYPE)).isEqualTo(0.42);
 	}
 
 	@Test
 	void unknownRelationType_returnsDefaultWeight() {
-		Map<RelationType, Double> weightMap = new HashMap<>();
-		weightMap.put(TAG_TYPE, 0.42);
-		Weights weights = new Weights(weightMap, 0.5);
+		Weights weights = new Weights(Map.of(TAG_TYPE, 0.42), 0.5);
 
 		assertThat(weights.weightOf(LIST_TYPE)).isEqualTo(0.5);
 	}

@@ -7,8 +7,7 @@ import org.codefx.java_after_eight.genealogist.RelationType;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -46,14 +45,11 @@ class GenealogyTests {
 	private final Genealogist linkGenealogist = (Post1, Post2) ->
 			new TypedRelation(Post1, Post2, linkRelation, linkScore(Post1, Post2));
 
-	private final Weights weights;
-
-	GenealogyTests() {
-		Map<RelationType, Double> weights = new HashMap<>();
-		weights.put(tagRelation, TAG_WEIGHT);
-		weights.put(linkRelation, LINK_WEIGHT);
-		this.weights = new Weights(weights, 0.5);
-	}
+	private final Weights weights = new Weights(
+			Map.of(
+					tagRelation, TAG_WEIGHT,
+					linkRelation, LINK_WEIGHT),
+			0.5);
 
 	private int tagScore(Post post1, Post post2) {
 		if (post1 == post2)
@@ -94,8 +90,8 @@ class GenealogyTests {
 	@Test
 	void oneGenealogist_twoPosts() {
 		Genealogy genealogy = new Genealogy(
-				Arrays.asList(postA, postB),
-				Arrays.asList(tagGenealogist),
+				List.of(postA, postB),
+				List.of(tagGenealogist),
 				weights);
 
 		Stream<Relation> relations = genealogy.inferRelations();
@@ -109,8 +105,8 @@ class GenealogyTests {
 	@Test
 	void otherGenealogist_twoPosts() {
 		Genealogy genealogy = new Genealogy(
-				Arrays.asList(postA, postB),
-				Arrays.asList(linkGenealogist),
+				List.of(postA, postB),
+				List.of(linkGenealogist),
 				weights);
 
 		Stream<Relation> relations = genealogy.inferRelations();
@@ -124,8 +120,8 @@ class GenealogyTests {
 	@Test
 	void oneGenealogist_threePosts() {
 		Genealogy genealogy = new Genealogy(
-				Arrays.asList(postA, postB, postC),
-				Arrays.asList(tagGenealogist),
+				List.of(postA, postB, postC),
+				List.of(tagGenealogist),
 				weights);
 
 		Stream<Relation> relations = genealogy.inferRelations();
@@ -143,8 +139,8 @@ class GenealogyTests {
 	@Test
 	void twoGenealogists_threePosts() {
 		Genealogy genealogy = new Genealogy(
-				Arrays.asList(postA, postB, postC),
-				Arrays.asList(tagGenealogist, linkGenealogist),
+				List.of(postA, postB, postC),
+				List.of(tagGenealogist, linkGenealogist),
 				weights);
 
 		Stream<Relation> relations = genealogy.inferRelations();
