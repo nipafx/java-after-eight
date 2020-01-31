@@ -1,4 +1,4 @@
-package org.codefx.java_after_eight.genealogy;
+package org.codefx.java_after_eight.genealogist;
 
 import org.codefx.java_after_eight.article.Article;
 

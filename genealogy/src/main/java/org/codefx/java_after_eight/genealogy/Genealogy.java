@@ -1,6 +1,8 @@
 package org.codefx.java_after_eight.genealogy;
 
 import org.codefx.java_after_eight.article.Article;
+import org.codefx.java_after_eight.genealogist.Genealogist;
+import org.codefx.java_after_eight.genealogist.TypedRelation;
 
 import java.util.*;
 import java.util.stream.Stream;

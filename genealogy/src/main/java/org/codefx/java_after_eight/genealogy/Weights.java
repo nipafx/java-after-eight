@@ -1,5 +1,7 @@
 package org.codefx.java_after_eight.genealogy;
 
+import org.codefx.java_after_eight.genealogist.RelationType;
+
 import java.util.HashMap;
 import java.util.Map;
 

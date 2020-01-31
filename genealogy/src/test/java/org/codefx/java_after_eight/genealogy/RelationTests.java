@@ -2,6 +2,8 @@ package org.codefx.java_after_eight.genealogy;
 
 import org.codefx.java_after_eight.article.Article;
 import org.codefx.java_after_eight.article.ArticleTestHelper;
+import org.codefx.java_after_eight.genealogist.RelationType;
+import org.codefx.java_after_eight.genealogist.TypedRelation;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

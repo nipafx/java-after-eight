@@ -14,7 +14,6 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 
 * strong encapsulation:
 	* in _genealogy_:
-		* move `Genealagist` and `GenealogistService` into new package `genealogist`
 		* export `genealogist` and `articles`
 	* in _genealogist_:
 		* export nothing

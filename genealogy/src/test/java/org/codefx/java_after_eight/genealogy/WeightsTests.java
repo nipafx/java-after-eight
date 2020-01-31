@@ -1,5 +1,6 @@
 package org.codefx.java_after_eight.genealogy;
 
+import org.codefx.java_after_eight.genealogist.RelationType;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
