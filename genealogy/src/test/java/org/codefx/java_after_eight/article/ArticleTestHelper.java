@@ -1,13 +1,18 @@
 package org.codefx.java_after_eight.article;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import java.time.LocalDate;
+import java.util.stream.Stream;
 
 public class ArticleTestHelper {
 
 	public static Article createWithSlug(String slug) {
-		Slug properSlug = when(mock(Slug.class).value()).thenReturn("a").getMock();
-		return when(mock(Article.class).slug()).thenReturn(properSlug).getMock();
+		return new Article(
+				Title.from("Title"),
+				Tag.from("[Tag]"),
+				LocalDate.now(),
+				Description.from("description"),
+				Slug.from(slug),
+				() -> Stream.of(""));
 	}
 
 }

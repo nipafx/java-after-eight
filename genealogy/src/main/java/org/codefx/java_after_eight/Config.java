@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class Config {
 
-	private static String CONFIG_FILE_NAME = ".recs.config";
+	private static final String CONFIG_FILE_NAME = ".recs.config";
 
 	private final Path articleFolder;
 	private final Optional<Path> outputFile;
@@ -75,6 +75,5 @@ public class Config {
 			}
 		});
 	}
-
 
 }

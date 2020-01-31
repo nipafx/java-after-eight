@@ -12,7 +12,6 @@ import org.codefx.java_after_eight.recommendation.Recommender;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,9 +22,6 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class Main {
-
-	// text similarities: https://medium.com/@adriensieg/text-similarities-da019229c894
-	// Stanford CoreNLP: https://github.com/stanfordnlp/CoreNLP
 
 	public static void main(String[] args) {
 		System.out.println(ProcessDetails.details());

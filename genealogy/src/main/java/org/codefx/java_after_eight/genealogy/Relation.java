@@ -6,6 +6,7 @@ import org.codefx.java_after_eight.genealogist.TypedRelation;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import static java.lang.Math.round;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
@@ -97,7 +98,7 @@ public class Relation {
 		}
 
 		public Relation finish() {
-			return new Relation(article1, article2, Math.round(scoreTotal / scoreCount));
+			return new Relation(article1, article2, round(scoreTotal / scoreCount));
 		}
 
 	}

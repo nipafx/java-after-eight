@@ -4,7 +4,10 @@ import org.codefx.java_after_eight.article.Article;
 import org.codefx.java_after_eight.genealogist.Genealogist;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;

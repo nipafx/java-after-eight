@@ -3,7 +3,6 @@ package org.codefx.java_after_eight.article;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;

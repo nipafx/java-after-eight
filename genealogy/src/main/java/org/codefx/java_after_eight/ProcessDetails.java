@@ -1,7 +1,5 @@
 package org.codefx.java_after_eight;
 
-import sun.management.VMManagement;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +56,7 @@ public class ProcessDetails {
 			RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
 			Field jvm_field = runtime.getClass().getDeclaredField("jvm");
 			jvm_field.setAccessible(true);
-			VMManagement mgmt = (VMManagement) jvm_field.get(runtime);
+			Object mgmt = jvm_field.get(runtime);
 
 			Method pid_method = mgmt.getClass().getDeclaredMethod("getProcessId");
 			pid_method.setAccessible(true);

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static java.lang.Math.round;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RelationTests {
@@ -72,7 +73,7 @@ class RelationTests {
 		Relation relation = Relation.aggregate(typedRelations, weights);
 
 		double expectedScore = (40 * TAG_WEIGHT + 80 * LINK_WEIGHT) / 2;
-		assertThat(relation.score()).isEqualTo(Math.round(expectedScore));
+		assertThat(relation.score()).isEqualTo(round(expectedScore));
 	}
 
 }

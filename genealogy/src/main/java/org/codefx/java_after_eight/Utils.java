@@ -6,7 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiPredicate;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
+
+import static java.lang.String.format;
 
 public final class Utils {
 
@@ -40,6 +47,38 @@ public final class Utils {
 		} catch (IOException ex) {
 			throw new UncheckedIOException(ex);
 		}
+	}
+
+	public static Stream<String> uncheckedFilesLines(Path file) {
+		try {
+			return Files.lines(file);
+		} catch (IOException ex) {
+			throw new UncheckedIOException(ex);
+		}
+	}
+
+	public static <ELEMENT> Collector<ELEMENT, ?, Optional<ELEMENT>> collectEqualElement() {
+		return collectEqualElement(Objects::equals);
+	}
+
+	public static <ELEMENT> Collector<ELEMENT, ?, Optional<ELEMENT>> collectEqualElement(
+			BiPredicate<ELEMENT, ELEMENT> equals) {
+		return Collector.of(
+				AtomicReference::new,
+				(AtomicReference<ELEMENT> left, ELEMENT right) -> {
+					if (left.get() != null && !equals.test(left.get(), right))
+						throw new IllegalArgumentException(
+								format("Unequal elements in stream: %s vs %s", left.get(), right));
+					left.set(right);
+				},
+				(AtomicReference<ELEMENT> left, AtomicReference<ELEMENT> right) -> {
+					if (left.get() != null && right.get() != null && !equals.test(left.get(), right.get()))
+						throw new IllegalArgumentException(
+								format("Unequal elements in stream: %s vs %s", left.get(), right.get()));
+					return left.get() != null ? left : right;
+				},
+				reference -> Optional.ofNullable(reference.get())
+		);
 	}
 
 }

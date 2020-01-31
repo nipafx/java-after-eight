@@ -4,11 +4,10 @@ import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
-/**
- * {@code RelationType} is a string (and not an enum) because {@code Genealogist} implementations
- * can be plugged in via services, which means their type is unknown at runtime.
- */
 public class RelationType {
+
+	// `RelationType` is a string (and not an enum) because {@code Genealogist} implementations
+	// can be plugged in via services, which means their type is unknown at runtime.
 
 	private final String value;
 
