@@ -1,10 +1,10 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight;
 
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TextParserTests {
+public class TextParserTests {
 
 	public interface QuotationTests {
 

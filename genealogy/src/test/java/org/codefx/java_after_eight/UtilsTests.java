@@ -1,4 +1,4 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight;
 
 import org.junit.jupiter.api.Nested;
 

@@ -35,7 +35,9 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 	* in `Weights::allEqual`
 * `Stream`:
 	* in `ArticleFactory::extractFrontMatter` and `extractContent` use `Stream::dropWhile` and `Stream::takeWhile`
-* `Optional::or`: in `ProcessDetails::getPid`
+* `Optional`:
+	* `or` in `ProcessDetails::getPid`
+	* * `ifPresentOrElse` in `Main::main`
 * OS process API: replace `ProcessDetails::getPid`
 * Java version API: replace `ProcessDetails::getMajorJavaVersion`
 
@@ -73,12 +75,17 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 * `String::strip` fixes recommendations for _Code-First Java 9 Tutorial_ (compare tags to _Java 9 Resources - Talks, Articles, Repos, Blogs, Books And Courses_):
 	* replace all `String::trim` with `strip`
 	* replace `String::isEmpty` with `isBlank`
+* `Path::of` instead of `Path::get` in Config
+* `toArray(String[]::new)` instead of `toArray(new String[0])` in `Config::readConfig`
 * in `Tag::from` stream pipeline use `Predicate::not`
 
 ### Java 12
 
 * try `Collectors::teeing` in `Relation::aggregate`
 * CDS archive for JDK classes is included
+* `CompletableFuture` in `Config` - instead of `exceptionally`:
+	* first `exceptionallyAsync​`
+	* then `exceptionallyCompose​`(`Async`)
 
 ### Java 13
 
@@ -122,8 +129,8 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 
 * try with resources
 * private interface methods
-* `Optional::ifPresentOrElse`, `stream`
-* stack walking TODO: use Log4J 2)
+* `Optional::stream`
+* stack walking (TODO: use Log4J 2)
 * unified logging
 * MR JARs
 * String performance improvements
@@ -139,9 +146,6 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 
 * switch expressions (TODO: how?)
 * `String::indent` and `String::transform`
-* `CompletableFuture::exceptionallyCompose` - TODO:
-	* read input/output paths from local config file
-	* if it does not exist, read from config file in user directory
 * `NumberFormat::getCompactNumberInstance` (TODO: log word count per article in short format)
 
 ### Java 13

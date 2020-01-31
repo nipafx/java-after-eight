@@ -10,12 +10,10 @@ import org.codefx.java_after_eight.genealogy.Weights;
 import org.codefx.java_after_eight.recommendation.Recommendation;
 import org.codefx.java_after_eight.recommendation.Recommender;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -29,37 +27,25 @@ public class Main {
 	// text similarities: https://medium.com/@adriensieg/text-similarities-da019229c894
 	// Stanford CoreNLP: https://github.com/stanfordnlp/CoreNLP
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		System.out.println(ProcessDetails.details());
 
-		Path articleFolder = getArticleFolder(args);
-		Genealogy genealogy = createGenealogy(articleFolder);
+		Config config = Config.create(args).join();
+		Genealogy genealogy = createGenealogy(config.articleFolder());
 		Recommender recommender = new Recommender();
 
 		Stream<Relation> relations = genealogy.inferRelations();
 		Stream<Recommendation> recommendations = recommender.recommend(relations, 3);
 		String recommendationsAsJson = recommendationsToJson(recommendations);
 
-		if (args.length > 1)
-			Files.write(Paths.get(args[1]), Arrays.asList(recommendationsAsJson.split("\n")));
+		if (config.outputFile().isPresent())
+			Utils.uncheckedFilesWrite(config.outputFile().get(), recommendationsAsJson);
 		else
 			System.out.println(recommendationsAsJson);
 	}
 
-	private static Path getArticleFolder(String[] args) {
-		if (args.length == 0)
-			throw new IllegalArgumentException("Please specific input path as first parameter.");
-
-		Path articleFolder = Paths.get(args[0]);
-		if (!Files.exists(articleFolder))
-			throw new IllegalArgumentException("Path doesn't exist: " + articleFolder);
-		if (!Files.isDirectory(articleFolder))
-			throw new IllegalArgumentException("Path is no directory: " + articleFolder);
-		return articleFolder;
-	}
-
-	private static Genealogy createGenealogy(Path articleFolder) throws IOException {
-		List<Article> articles = Files.list(articleFolder)
+	private static Genealogy createGenealogy(Path articleFolder) {
+		List<Article> articles = Utils.uncheckedFilesList(articleFolder)
 				.filter(Files::isRegularFile)
 				.filter(file -> file.toString().endsWith(".md"))
 				.map(ArticleFactory::createArticle)

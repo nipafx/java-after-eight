@@ -75,7 +75,7 @@ class ArticleFactoryTests {
 	class FromFile {
 
 		@Test
-		void createFromFile_allTagsCorrect_getValidArticle() throws IOException {
+		void createFromFile_allTagsCorrect_getValidArticle() {
 			List<String> file = Arrays.asList(
 					"---",
 					"title: A cool blog post",
