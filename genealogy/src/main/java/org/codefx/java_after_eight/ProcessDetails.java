@@ -23,20 +23,10 @@ public class ProcessDetails {
 	}
 
 	public static Optional<Long> getPid() {
-		Optional<Long> pid = getPidFromMxBeanName();
-		if (pid.isPresent())
-			return pid;
-		pid = getPidFromMxBeanInternal();
-		if (pid.isPresent())
-			return pid;
-		pid = getPidFromProcSelfSymlink();
-		if (pid.isPresent())
-			return pid;
-		pid = getPidFromBashPid();
-		if (pid.isPresent())
-			return pid;
-
-		return Optional.empty();
+		return getPidFromMxBeanName()
+				.or(ProcessDetails::getPidFromMxBeanInternal)
+				.or(ProcessDetails::getPidFromProcSelfSymlink)
+				.or(ProcessDetails::getPidFromBashPid);
 	}
 
 	private static Optional<Long> getPidFromMxBeanName() {

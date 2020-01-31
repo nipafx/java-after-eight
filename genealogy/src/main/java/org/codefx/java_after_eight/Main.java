@@ -36,10 +36,9 @@ public class Main {
 		Stream<Recommendation> recommendations = recommender.recommend(relations, 3);
 		String recommendationsAsJson = recommendationsToJson(recommendations);
 
-		if (config.outputFile().isPresent())
-			Utils.uncheckedFilesWrite(config.outputFile().get(), recommendationsAsJson);
-		else
-			System.out.println(recommendationsAsJson);
+		config.outputFile().ifPresentOrElse(
+				outputFile -> Utils.uncheckedFilesWrite(outputFile, recommendationsAsJson),
+				() -> System.out.println(recommendationsAsJson));
 	}
 
 	private static Genealogy createGenealogy(Path articleFolder, Path talkFolder, Path videoFolder) {
