@@ -35,6 +35,10 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 	* in `Weights::allEqual`
 * `Stream`:
 	* in `ArticleFactory::extractFrontMatter` and `extractContent` use `Stream::dropWhile` and `Stream::takeWhile`
+* `Optional::or`: in `ProcessDetails::getPid`
+* OS process API: replace `ProcessDetails::getPid`
+* Java version API: replace `ProcessDetails::getMajorJavaVersion`
+
 
 ### Java 10
 
@@ -118,9 +122,7 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 
 * try with resources
 * private interface methods
-* `Optional::or`, `ifPresentOrElse`, `stream`
-* OS process API (TODO: log current PID)
-* Java version API (TODO: log Java version)
+* `Optional::ifPresentOrElse`, `stream`
 * stack walking TODO: use Log4J 2)
 * unified logging
 * MR JARs

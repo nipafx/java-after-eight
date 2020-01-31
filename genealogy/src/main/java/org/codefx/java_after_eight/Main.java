@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
-import static java.lang.Math.round;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
@@ -31,6 +30,8 @@ public class Main {
 	// Stanford CoreNLP: https://github.com/stanfordnlp/CoreNLP
 
 	public static void main(String[] args) throws IOException {
+		System.out.println(ProcessDetails.details());
+
 		Path articleFolder = getArticleFolder(args);
 		Genealogy genealogy = createGenealogy(articleFolder);
 		Recommender recommender = new Recommender();
