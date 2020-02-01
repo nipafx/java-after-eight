@@ -1,17 +1,15 @@
 rm -rf cds/
 mkdir cds
 
+printf "\n--- NO CDS ---\n\n"
+printf ">> deactivating CDS\n"
 ./stats-time.sh java -Xlog:class+load:file=cds/off.log \
+	-Xshare:off \
 	-cp jars/genealogy.jar:jars/genealogists.jar org.codefx.java_after_eight.Main
 
 printf "\n--- JDK CDS ---\n\n"
-printf ">> building archive...\n"
-java -XX:+UnlockDiagnosticVMOptions -Xshare:dump \
-	-XX:SharedArchiveFile=cds/jdk.jsa
-printf "\n>> using archive...\n"
+printf ">> using default archive\n"
 ./stats-time.sh java -Xlog:class+load:file=cds/jdk.log \
-	-XX:+UnlockDiagnosticVMOptions -Xshare:on \
-	-XX:SharedArchiveFile=cds/jdk.jsa \
 	-cp jars/genealogy.jar:jars/genealogists.jar org.codefx.java_after_eight.Main
 
 
