@@ -13,8 +13,6 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
-import static java.lang.String.format;
-
 public final class Utils {
 
 	private Utils() {
@@ -73,13 +71,13 @@ public final class Utils {
 				(AtomicReference<ELEMENT> left, ELEMENT right) -> {
 					if (left.get() != null && !equals.test(left.get(), right))
 						throw new IllegalArgumentException(
-								format("Unequal elements in stream: %s vs %s", left.get(), right));
+								"Unequal elements in stream: %s vs %s".formatted(left.get(), right));
 					left.set(right);
 				},
 				(AtomicReference<ELEMENT> left, AtomicReference<ELEMENT> right) -> {
 					if (left.get() != null && right.get() != null && !equals.test(left.get(), right.get()))
 						throw new IllegalArgumentException(
-								format("Unequal elements in stream: %s vs %s", left.get(), right.get()));
+								"Unequal elements in stream: %s vs %s".formatted(left.get(), right.get()));
 					return left.get() != null ? left : right;
 				},
 				reference -> Optional.ofNullable(reference.get())
