@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -66,8 +65,8 @@ public class Config {
 		CompletableFuture<String[]> rawConfig = args.length > 0
 				? CompletableFuture.completedFuture(args)
 				: readProjectConfig()
-				.exceptionally(__ -> readUserConfig().join())
-				.exceptionally(__ -> new String[0]);
+				.exceptionallyComposeAsync(__ -> readUserConfig())
+				.exceptionallyAsync(__ -> new String[0]);
 
 		return rawConfig
 				.thenApply(Config::new);
