@@ -16,6 +16,18 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.post=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.post.factories=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.genealogy=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.recommendation=ALL-UNNAMED
+					</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
 					<finalName>genealogy</finalName>

@@ -1,1 +1,1 @@
-java -cp jars/genealogy.jar:jars/genealogists.jar org.codefx.java_after_eight.Main
+java -p jars -m org.codefx.java_after_eight.genealogy
