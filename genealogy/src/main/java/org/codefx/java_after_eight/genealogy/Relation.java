@@ -3,12 +3,16 @@ package org.codefx.java_after_eight.genealogy;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
 import org.codefx.java_after_eight.post.Post;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 import static java.lang.Math.round;
-import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.averagingDouble;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.teeing;
+import static org.codefx.java_after_eight.Utils.collectEqualElement;
 
 public class Relation {
 
@@ -26,10 +30,14 @@ public class Relation {
 	}
 
 	static Relation aggregate(Stream<TypedRelation> typedRelations, Weights weights) {
-		return typedRelations
-				.map(relation -> new UnfinishedRelation(relation, weights.weightOf(relation.type())))
-				.reduce(UnfinishedRelation::fold)
-				.map(UnfinishedRelation::finish)
+		return typedRelations.collect(
+				teeing(
+						mapping(
+								rel -> new Post[]{ rel.post1(), rel.post2() },
+								collectEqualElement(Arrays::equals)),
+						averagingDouble(rel -> rel.score() * weights.weightOf(rel.type())),
+						(posts, score) -> posts.map(ps -> new Relation(ps[0], ps[1], round(score)))
+				))
 				.orElseThrow(() -> new IllegalArgumentException("Can't create relation from zero typed relations."));
 	}
 
@@ -69,38 +77,6 @@ public class Relation {
 				", post2=" + post2.slug().value() +
 				", score=" + score +
 				'}';
-	}
-
-	private static class UnfinishedRelation {
-
-		private final Post post1;
-		private final Post post2;
-		private double scoreTotal;
-		private long scoreCount;
-
-		public UnfinishedRelation(TypedRelation relation, double weight) {
-			this.post1 = relation.post1();
-			this.post2 = relation.post2();
-			this.scoreTotal = relation.score() * weight;
-			this.scoreCount = 1;
-		}
-
-		public UnfinishedRelation fold(UnfinishedRelation other) {
-			if (post1 != other.post1)
-				throw new IllegalArgumentException(format(
-						"All typed relations must belong to the same post: %s vs %s", post1, other.post1));
-			if (post2 != other.post2)
-				throw new IllegalArgumentException(format(
-						"All typed relations must belong to the same post: %s vs %s", post2, other.post2));
-			scoreTotal += other.scoreTotal;
-			scoreCount += other.scoreCount;
-			return this;
-		}
-
-		public Relation finish() {
-			return new Relation(post1, post2, round(scoreTotal / scoreCount));
-		}
-
 	}
 
 }
