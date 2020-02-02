@@ -21,22 +21,34 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 	* update _genealogy_ and _genealogist_ accordingly
 	* in `Main::getGenealogists`, use `ServiceLoader::stream`
 	* point out that compiler now checks what kind of service can be provided
-* debugging: show module name and versions in stack traces
-
-#### Language
+* open _genealogy_ for tests:
+	```xml
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.article=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.genealogist=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.genealogy=ALL-UNNAMED
+						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.recommendation=ALL-UNNAMED
+					</argLine>
+				</configuration>
+			</plugin>
+	```
 
 #### APIs
 
 * collection factories:
 	* search `Arrays.asList` (better because truly immutable)
 	* creation of field `weights` in `GenealogyTests` and `RelationTests` (remove constructors)
-	* all four `weightMap`s in `WeightsTests`
+	* two non-null `weightMap`s in `WeightsTests`
 	* in `Weights::allEqual`
 * `Stream`:
 	* in `ArticleFactory::extractFrontMatter` and `extractContent` use `Stream::dropWhile` and `Stream::takeWhile`
 * `Optional`:
-	* `or` in `ProcessDetails::getPid`
 	* * `ifPresentOrElse` in `Main::main`
+	* `or` in `ProcessDetails::getPid`
 * OS process API: replace `ProcessDetails::getPid`
 * Java version API: replace `ProcessDetails::getMajorJavaVersion`
 
@@ -59,15 +71,21 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 
 * collection factories:
 	* in `Weights` constructor use `Map::copyOf` (also remove following null checks)
-* `Collectors::toUnmodfiable...`: search `toList()`, `toMap(`, `toSet()`
-* `Stream`:
-	* in `Tag::from` use `Collectors::toUnmodifiableList`
+* `Collectors::toUnmodifiable...`: search `toList()`, `toMap(`, `toSet()`
 
 #### JVM
 
-* Application Class-Data Sharing
-	* create CDS
-	* create AppCDS
+* Application Class-Data Sharing (see cds.sh):
+
+	```sh
+	java -XX:+UnlockDiagnosticVMOptions -Xshare:dump \
+		-XX:SharedArchiveFile=cds-jdk.jsa
+	./stats-time.sh java -Xlog:class+load:file=cds-jdk.log \
+		-XX:+UnlockDiagnosticVMOptions -Xshare:on \
+		-XX:SharedArchiveFile=cds-jdk.jsa \
+		-cp jars/genealogy.jar:jars/genealogists.jar org.codefx.java_after_eight.Main
+	```
+
 
 ### Java 11
 
@@ -76,77 +94,120 @@ Nice Java 8 code base that gets way nicer with Java 9-14.
 	* replace `String::isEmpty` with `isBlank`
 * `Path::of` instead of `Path::get` in Config
 * `toArray(String[]::new)` instead of `toArray(new String[0])` in `Config::readConfig`
-* in `Tag::from` stream pipeline use `Predicate::not`
+* use `Predicate::not`:
+	* in `Tag::from`
+	* in `ArticleFactory::extractFrontmatter` after adding `map(String::strip)`
 
 ### Java 12
 
-* try `Collectors::teeing` in `Relation::aggregate`
-* CDS archive for JDK classes is included
+Need to update ASM dependency of Maven Surefire:
+
+```xml
+<dependencies>
+	<dependency>
+		<groupId>org.ow2.asm</groupId>
+		<artifactId>asm</artifactId>
+		<version>7.3.1</version>
+	</dependency>
+</dependencies>
+```
+
+* `Collectors::teeing` in `Relation::aggregate`
 * `CompletableFuture` in `Config` - instead of `exceptionally`:
 	* first `exceptionallyAsync​`
 	* then `exceptionallyCompose​`(`Async`)
+* CDS archive for JDK classes is included: turn off with `-Xshare:off`
 
 ### Java 13
 
-* text blocks in `Main::recommendationsToJson`
-* AppCDS archive automatically generated
-* use `String::formatted` instead of `String::format`
+* bump to Java 13
+	* add to parent POM
+		```xml
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<compilerArgs>
+					<arg>--enable-preview</arg>
+				</compilerArgs>
+			</configuration>
+		</plugin>
+		```
+	* add `--enable-preview` to Surefire in genealogy and CDS scripts
+
+* text blocks in `Main::recommendationsToJson`:
+	```java
+		var frame = """
+				[
+				$RECOMMENDATIONS
+				]
+				""";
+		var recommendation = """
+					{
+						"title": "$TITLE",
+						"recommendations": [
+				$RECOMMENDED_ARTICLES
+						]
+					}
+				""";
+		var recommendedArticle = """
+				\t\t\t{ "title": "$TITLE" }""";
+	```
+* use `String::formatted` instead of `String::format` (search for `format(`)
+* AppCDS archive automatically generated: create with `-XX:ArchiveClassesAtExit=cds/app.jsa`
 
 ### Java 14
 
+* record intro - replace `Map.Entry` in `ArticleFactory::createArticle`
+
+	```java
+	private static class FrontMatterLine {
+
+		private final String key;
+		private final String value;
+
+		FrontMatterLine(String key, String value) {
+			this.key = key;
+			this.value = value;
+		}
+
+		String key() {
+			return key;
+		}
+
+		String value() {
+			return value;
+		}
+
+		// equals, hashCode, toString?
+
+	}
+	```
+
 * records:
-	* counterpoint: `Weights` does not expose its fields
-	* customized constructor:
-		* `Article`
-	* static factories, non-public simple constructor:
+	* static factories, deprecated constructor:
 		* `Description`
-		* `Slug`
 		* `Title`
 		* `RelationType`
-	* static factories, customized constructor:
+		* `TypedRelation`
+	* static factories, non-public customized constructor:
 		* `Tag`
 		* `Relation`
-		* `TypedRelation`
-	* custom getter:
-		* `Article` for tags
-		* Recommendation for recommended articles
-	* custom `equals`:
-		* `Article` (just slug)
-	* class-local:
-		* replace `Map.Entry` in `ArticleFactory::createArticle`
-		* `Relation.UnfinishedRelation`
-	* method-local: `Genealogy::inferTypedRelations`
-* pattern matching in equals
+	* static factories, unsuitable constructor:
+		* `Config`
+	* customized - `Recommendation`:
+		* constructor
+		* static factory
+		* getter for `recommendedArticles` to create immutable copy
+	* customized - `Article`:
+		* constructor
+		* static factory
+		* getter for `tags` to create immutable copy
+		* custom `equals`/`hashCode`
+	* implements interface
+		* `Slug`
+	* method-local: `Genealogy::inferTypedRelations`, `Relation::aggregate`
+	* counterpoint: `Weights` does not expose its fields
+* pattern matching in `Article::equals`
 * helpful NPE messages:
-	* remove description from an article
-	* add command line flag
-
-
-## Additional Java 9+ features
-
-### Java 9
-
-* try with resources
-* private interface methods
-* `Optional::stream`
-* stack walking (TODO: use Log4J 2)
-* unified logging
-* MR JARs
-* String performance improvements
-
-### Java 11
-
-* `String::repeat` and `String::lines`
-* `Optional::isEmpty`
-* reactive HTTP/2 client (TODO: post results somewhere; project could use OkHttp, we replace)
-* launch source files
-
-### Java 12
-
-* switch expressions (TODO: how?)
-* `String::indent` and `String::transform`
-* `NumberFormat::getCompactNumberInstance` (TODO: log word count per article in short format)
-
-### Java 13
-
-* switch expressions use `yield`
+	* let `fromRawConfig` return `null`
+	* add command line flag `-XX:+ShowCodeDetailsInExceptionMessages`
