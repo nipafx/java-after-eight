@@ -1,5 +1,6 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight.post;
 
+import org.codefx.java_after_eight.post.Slug;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

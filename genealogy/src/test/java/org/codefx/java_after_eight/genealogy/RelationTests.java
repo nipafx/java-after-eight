@@ -1,7 +1,7 @@
 package org.codefx.java_after_eight.genealogy;
 
-import org.codefx.java_after_eight.article.Article;
-import org.codefx.java_after_eight.article.ArticleTestHelper;
+import org.codefx.java_after_eight.post.Post;
+import org.codefx.java_after_eight.post.PostTestHelper;
 import org.codefx.java_after_eight.genealogist.RelationType;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,8 @@ class RelationTests {
 	private static final double TAG_WEIGHT = 1.0;
 	private static final double LINK_WEIGHT = 0.25;
 
-	private final Article articleA = ArticleTestHelper.createWithSlug("a");
-	private final Article articleB = ArticleTestHelper.createWithSlug("b");
+	private final Post postA = PostTestHelper.createWithSlug("a");
+	private final Post postB = PostTestHelper.createWithSlug("b");
 
 	private final RelationType tagRelation = RelationType.from("tag");
 	private final RelationType linkRelation = RelationType.from("link");
@@ -38,24 +38,24 @@ class RelationTests {
 	 */
 
 	@Test
-	void singleTypedRelation_weightOne_sameArticlesAndScore() {
+	void singleTypedRelation_weightOne_samePostsAndScore() {
 		int score = 60;
 		Stream<TypedRelation> typedRelations = Stream.of(
-				TypedRelation.from(articleA, articleB, tagRelation, score)
+				TypedRelation.from(postA, postB, tagRelation, score)
 		);
 
 		Relation relation = Relation.aggregate(typedRelations, weights);
 
-		assertThat(relation.article1()).isEqualTo(articleA);
-		assertThat(relation.article2()).isEqualTo(articleB);
+		assertThat(relation.post1()).isEqualTo(postA);
+		assertThat(relation.post2()).isEqualTo(postB);
 		assertThat(relation.score()).isEqualTo(score);
 	}
 
 	@Test
 	void twoTypedRelation_weightOne_averagedScore() {
 		Stream<TypedRelation> typedRelations = Stream.of(
-				TypedRelation.from(articleA, articleB, tagRelation, 40),
-				TypedRelation.from(articleA, articleB, tagRelation, 80)
+				TypedRelation.from(postA, postB, tagRelation, 40),
+				TypedRelation.from(postA, postB, tagRelation, 80)
 		);
 
 		Relation relation = Relation.aggregate(typedRelations, weights);
@@ -66,8 +66,8 @@ class RelationTests {
 	@Test
 	void twoTypedRelation_differingWeight_weightedScore() {
 		Stream<TypedRelation> typedRelations = Stream.of(
-				TypedRelation.from(articleA, articleB, tagRelation, 40),
-				TypedRelation.from(articleA, articleB, linkRelation, 80)
+				TypedRelation.from(postA, postB, tagRelation, 40),
+				TypedRelation.from(postA, postB, linkRelation, 80)
 		);
 
 		Relation relation = Relation.aggregate(typedRelations, weights);

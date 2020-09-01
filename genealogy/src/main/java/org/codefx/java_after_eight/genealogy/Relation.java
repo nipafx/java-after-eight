@@ -1,7 +1,7 @@
 package org.codefx.java_after_eight.genealogy;
 
-import org.codefx.java_after_eight.article.Article;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
+import org.codefx.java_after_eight.post.Post;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -12,13 +12,13 @@ import static java.util.Objects.requireNonNull;
 
 public class Relation {
 
-	private final Article article1;
-	private final Article article2;
+	private final Post post1;
+	private final Post post2;
 	private final long score;
 
-	Relation(Article article1, Article article2, long score) {
-		this.article1 = requireNonNull(article1);
-		this.article2 = requireNonNull(article2);
+	Relation(Post post1, Post post2, long score) {
+		this.post1 = requireNonNull(post1);
+		this.post2 = requireNonNull(post2);
 		this.score = score;
 
 		if (score < 0 || 100 < score)
@@ -33,12 +33,12 @@ public class Relation {
 				.orElseThrow(() -> new IllegalArgumentException("Can't create relation from zero typed relations."));
 	}
 
-	public Article article1() {
-		return article1;
+	public Post post1() {
+		return post1;
 	}
 
-	public Article article2() {
-		return article2;
+	public Post post2() {
+		return post2;
 	}
 
 	public long score() {
@@ -53,52 +53,52 @@ public class Relation {
 			return false;
 		Relation relation = (Relation) o;
 		return score == relation.score &&
-				article1.equals(relation.article1) &&
-				article2.equals(relation.article2);
+				post1.equals(relation.post1) &&
+				post2.equals(relation.post2);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(article1, article2, score);
+		return Objects.hash(post1, post2, score);
 	}
 
 	@Override
 	public String toString() {
 		return "Relation{" +
-				"article1=" + article1.slug().value() +
-				", article2=" + article2.slug().value() +
+				"post1=" + post1.slug().value() +
+				", post2=" + post2.slug().value() +
 				", score=" + score +
 				'}';
 	}
 
 	private static class UnfinishedRelation {
 
-		private final Article article1;
-		private final Article article2;
+		private final Post post1;
+		private final Post post2;
 		private double scoreTotal;
 		private long scoreCount;
 
 		public UnfinishedRelation(TypedRelation relation, double weight) {
-			this.article1 = relation.article1();
-			this.article2 = relation.article2();
+			this.post1 = relation.post1();
+			this.post2 = relation.post2();
 			this.scoreTotal = relation.score() * weight;
 			this.scoreCount = 1;
 		}
 
 		public UnfinishedRelation fold(UnfinishedRelation other) {
-			if (article1 != other.article1)
+			if (post1 != other.post1)
 				throw new IllegalArgumentException(format(
-						"All typed relations must belong to the same article: %s vs %s", article1, other.article1));
-			if (article2 != other.article2)
+						"All typed relations must belong to the same post: %s vs %s", post1, other.post1));
+			if (post2 != other.post2)
 				throw new IllegalArgumentException(format(
-						"All typed relations must belong to the same article: %s vs %s", article2, other.article2));
+						"All typed relations must belong to the same post: %s vs %s", post2, other.post2));
 			scoreTotal += other.scoreTotal;
 			scoreCount += other.scoreCount;
 			return this;
 		}
 
 		public Relation finish() {
-			return new Relation(article1, article2, round(scoreTotal / scoreCount));
+			return new Relation(post1, post2, round(scoreTotal / scoreCount));
 		}
 
 	}

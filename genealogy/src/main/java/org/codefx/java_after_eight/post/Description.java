@@ -1,4 +1,4 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight.post;
 
 import org.codefx.java_after_eight.Utils;
 
@@ -14,7 +14,7 @@ public class Description {
 		this.text = text;
 	}
 
-	static Description from(String text) {
+	public static Description from(String text) {
 		requireNonNull(text);
 		String unquotedText = Utils.removeOuterQuotationMarks(text).trim();
 		if (unquotedText.isEmpty())

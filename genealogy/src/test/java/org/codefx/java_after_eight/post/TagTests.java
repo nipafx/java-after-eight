@@ -1,5 +1,7 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight.post;
 
+import org.assertj.core.api.Assertions;
+import org.codefx.java_after_eight.post.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
@@ -15,7 +17,7 @@ class TagTests {
 
 		Set<Tag> tags = Tag.from(tagsText);
 
-		assertThat(tags)
+		Assertions.assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
 	}
@@ -27,7 +29,7 @@ class TagTests {
 
 		Set<Tag> tags = Tag.from(tagsText);
 
-		assertThat(tags)
+		Assertions.assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
 	}
@@ -39,7 +41,7 @@ class TagTests {
 
 		Set<Tag> tags = Tag.from(tagsText);
 
-		assertThat(tags)
+		Assertions.assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
 	}
@@ -51,7 +53,7 @@ class TagTests {
 
 		Set<Tag> tags = Tag.from(tagsText);
 
-		assertThat(tags)
+		Assertions.assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
 	}
@@ -63,7 +65,7 @@ class TagTests {
 
 		Set<Tag> tags = Tag.from(tagsText);
 
-		assertThat(tags)
+		Assertions.assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
 	}
@@ -75,7 +77,7 @@ class TagTests {
 
 		Set<Tag> tags = Tag.from(tagsText);
 
-		assertThat(tags)
+		Assertions.assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
 	}
@@ -87,7 +89,7 @@ class TagTests {
 
 		Set<Tag> tags = Tag.from(tagsText);
 
-		assertThat(tags)
+		Assertions.assertThat(tags)
 				.extracting(Tag::text)
 				.containsExactlyInAnyOrder(expectedTags);
 	}

@@ -1,6 +1,6 @@
 package org.codefx.java_after_eight.genealogists.silly;
 
-import org.codefx.java_after_eight.article.Article;
+import org.codefx.java_after_eight.post.Post;
 import org.codefx.java_after_eight.genealogist.Genealogist;
 import org.codefx.java_after_eight.genealogist.RelationType;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
@@ -16,18 +16,18 @@ public class SillyGenealogist implements Genealogist {
 	private static final RelationType TYPE = RelationType.from("silly");
 
 	@Override
-	public TypedRelation infer(Article article1, Article article2) {
-		Set<Integer> article1Letters = titleLetters(article1);
-		Set<Integer> article2Letters = titleLetters(article2);
-		Set<Integer> intersection = new HashSet<>(article1Letters);
-		intersection.retainAll(article2Letters);
-		long score = round((100.0 * intersection.size()) / article1Letters.size());
+	public TypedRelation infer(Post post1, Post post2) {
+		Set<Integer> post1Letters = titleLetters(post1);
+		Set<Integer> post2Letters = titleLetters(post2);
+		Set<Integer> intersection = new HashSet<>(post1Letters);
+		intersection.retainAll(post2Letters);
+		long score = round((100.0 * intersection.size()) / post1Letters.size());
 
-		return TypedRelation.from(article1, article2, TYPE, score);
+		return TypedRelation.from(post1, post2, TYPE, score);
 	}
 
-	private static Set<Integer> titleLetters(Article article) {
-		return article
+	private static Set<Integer> titleLetters(Post post) {
+		return post
 				.title()
 				.text()
 				.toLowerCase()

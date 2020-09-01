@@ -1,6 +1,6 @@
 package org.codefx.java_after_eight.genealogist;
 
-import org.codefx.java_after_eight.article.Article;
+import org.codefx.java_after_eight.post.Post;
 
 import java.util.Collection;
 
@@ -9,6 +9,6 @@ import java.util.Collection;
  */
 public interface GenealogistService {
 
-	Genealogist procure(Collection<Article> articles);
+	Genealogist procure(Collection<Post> posts);
 
 }

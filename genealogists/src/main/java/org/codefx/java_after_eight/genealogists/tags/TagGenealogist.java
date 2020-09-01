@@ -1,7 +1,7 @@
 package org.codefx.java_after_eight.genealogists.tags;
 
-import org.codefx.java_after_eight.article.Article;
-import org.codefx.java_after_eight.article.Tag;
+import org.codefx.java_after_eight.post.Post;
+import org.codefx.java_after_eight.post.Tag;
 import org.codefx.java_after_eight.genealogist.Genealogist;
 import org.codefx.java_after_eight.genealogist.RelationType;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
@@ -16,15 +16,15 @@ public class TagGenealogist implements Genealogist {
 	private static final RelationType TYPE = RelationType.from("tag");
 
 	@Override
-	public TypedRelation infer(Article article1, Article article2) {
-		Set<Tag> article2Tags = article2.tags().collect(toSet());
-		long numberOfSharedTags = article1
+	public TypedRelation infer(Post post1, Post post2) {
+		Set<Tag> post2Tags = post2.tags().collect(toSet());
+		long numberOfSharedTags = post1
 				.tags()
-				.filter(article2Tags::contains)
+				.filter(post2Tags::contains)
 				.count();
-		long numberOfArticle1Tags = article1.tags().count();
-		long score = round((100.0 * 2 * numberOfSharedTags) / (numberOfArticle1Tags + article2Tags.size()));
-		return TypedRelation.from(article1, article2, TYPE, score);
+		long numberOfPost1Tags = post1.tags().count();
+		long score = round((100.0 * 2 * numberOfSharedTags) / (numberOfPost1Tags + post2Tags.size()));
+		return TypedRelation.from(post1, post2, TYPE, score);
 	}
 
 }

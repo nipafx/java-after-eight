@@ -1,6 +1,7 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight.post;
 
 import org.codefx.java_after_eight.TextParserTests;
+import org.codefx.java_after_eight.post.Title;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

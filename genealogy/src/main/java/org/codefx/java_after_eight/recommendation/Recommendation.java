@@ -1,7 +1,7 @@
 package org.codefx.java_after_eight.recommendation;
 
-import org.codefx.java_after_eight.article.Article;
-import org.codefx.java_after_eight.article.Slug;
+import org.codefx.java_after_eight.post.Post;
+import org.codefx.java_after_eight.post.Slug;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,25 +13,25 @@ import static java.util.stream.Collectors.toList;
 
 public class Recommendation {
 
-	private final Article article;
-	private final List<Article> recommendedArticles;
+	private final Post post;
+	private final List<Post> recommendedPosts;
 
-	Recommendation(Article article, List<Article> recommendedArticles) {
-		this.article = requireNonNull(article);
-		this.recommendedArticles = requireNonNull(recommendedArticles);
+	Recommendation(Post post, List<Post> recommendedPosts) {
+		this.post = requireNonNull(post);
+		this.recommendedPosts = requireNonNull(recommendedPosts);
 	}
 
-	static Recommendation from(Article article, Stream<Article> sortedRecommendations, int perArticle) {
-		List<Article> recommendations = sortedRecommendations.limit(perArticle).collect(toList());
-		return new Recommendation(requireNonNull(article), recommendations);
+	static Recommendation from(Post post, Stream<Post> sortedRecommendations, int perPost) {
+		List<Post> recommendations = sortedRecommendations.limit(perPost).collect(toList());
+		return new Recommendation(requireNonNull(post), recommendations);
 	}
 
-	public Article article() {
-		return article;
+	public Post post() {
+		return post;
 	}
 
-	public Stream<Article> recommendedArticles() {
-		return recommendedArticles.stream();
+	public Stream<Post> recommendedPosts() {
+		return recommendedPosts.stream();
 	}
 
 	@Override
@@ -41,21 +41,21 @@ public class Recommendation {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Recommendation that = (Recommendation) o;
-		return article.equals(that.article) &&
-				recommendedArticles.equals(that.recommendedArticles);
+		return post.equals(that.post) &&
+				recommendedPosts.equals(that.recommendedPosts);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(article);
+		return Objects.hash(post);
 	}
 
 	@Override
 	public String toString() {
 		return "Recommendation{" +
-				"article=" + article.slug().value() +
-				", recommendedArticles=" + recommendedArticles.stream()
-				.map(Article::slug)
+				"post=" + post.slug().value() +
+				", recommendedPosts=" + recommendedPosts.stream()
+				.map(Post::slug)
 				.map(Slug::value)
 				.collect(joining(", ")) +
 				'}';

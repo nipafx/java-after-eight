@@ -1,4 +1,4 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight.post;
 
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ public class Slug implements Comparable<Slug> {
 		this.value = value;
 	}
 
-	static Slug from(String value) {
+	public static Slug from(String value) {
 		requireNonNull(value);
 		if (value.isEmpty())
 			throw new IllegalArgumentException("Slugs can't have an empty value.");

@@ -1,8 +1,8 @@
 package org.codefx.java_after_eight.genealogy;
 
-import org.codefx.java_after_eight.article.Article;
 import org.codefx.java_after_eight.genealogist.Genealogist;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
+import org.codefx.java_after_eight.post.Post;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,12 +14,12 @@ import static java.util.Objects.requireNonNull;
 
 public class Genealogy {
 
-	private final Collection<Article> articles;
+	private final Collection<Post> posts;
 	private final Collection<Genealogist> genealogists;
 	private final Weights weights;
 
-	public Genealogy(Collection<Article> articles, Collection<Genealogist> genealogists, Weights weights) {
-		this.articles = requireNonNull(articles);
+	public Genealogy(Collection<Post> posts, Collection<Genealogist> genealogists, Weights weights) {
+		this.posts = requireNonNull(posts);
 		this.genealogists = requireNonNull(genealogists);
 		this.weights = requireNonNull(weights);
 	}
@@ -29,52 +29,52 @@ public class Genealogy {
 	}
 
 	private Stream<Relation> aggregateTypedRelations(Stream<TypedRelation> typedRelations) {
-		Map<Article, Map<Article, Collection<TypedRelation>>> sortedTypedRelations = new HashMap<>();
+		Map<Post, Map<Post, Collection<TypedRelation>>> sortedTypedRelations = new HashMap<>();
 		typedRelations.forEach(relation -> sortedTypedRelations
-				.computeIfAbsent(relation.article1(), __ -> new HashMap<>())
-				.computeIfAbsent(relation.article2(), __ -> new ArrayList<>())
+				.computeIfAbsent(relation.post1(), __ -> new HashMap<>())
+				.computeIfAbsent(relation.post2(), __ -> new ArrayList<>())
 				.add(relation));
 		return sortedTypedRelations
 				.values().stream()
-				.flatMap(articleWithRelations -> articleWithRelations.values().stream())
+				.flatMap(postWithRelations -> postWithRelations.values().stream())
 				.map(relations -> Relation.aggregate(relations.stream(), weights));
 	}
 
 	private Stream<TypedRelation> inferTypedRelations() {
-		return articles.stream()
-				.flatMap(article1 -> articles.stream()
-						.map(article2 -> new Articles(article1, article2)))
-				// no need to compare articles with themselves
-				.filter(articles -> articles.article1 != articles.article2)
-				.flatMap(articles -> genealogists.stream()
-						.map(genealogist -> new ArticleResearch(genealogist, articles)))
-				.map(ArticleResearch::infer);
+		return posts.stream()
+				.flatMap(post1 -> posts.stream()
+						.map(post2 -> new Posts(post1, post2)))
+				// no need to compare posts with themselves
+				.filter(posts -> posts.post1 != posts.post2)
+				.flatMap(posts -> genealogists.stream()
+						.map(genealogist -> new PostResearch(genealogist, posts)))
+				.map(PostResearch::infer);
 	}
 
-	private static class Articles {
+	private static class Posts {
 
-		final Article article1;
-		final Article article2;
+		final Post post1;
+		final Post post2;
 
-		Articles(Article article1, Article article2) {
-			this.article1 = article1;
-			this.article2 = article2;
+		Posts(Post post1, Post post2) {
+			this.post1 = post1;
+			this.post2 = post2;
 		}
 
 	}
 
-	private static class ArticleResearch {
+	private static class PostResearch {
 
 		final Genealogist genealogist;
-		final Articles articles;
+		final Posts posts;
 
-		ArticleResearch(Genealogist genealogist, Articles articles) {
+		PostResearch(Genealogist genealogist, Posts posts) {
 			this.genealogist = genealogist;
-			this.articles = articles;
+			this.posts = posts;
 		}
 
 		TypedRelation infer() {
-			return genealogist.infer(articles.article1, articles.article2);
+			return genealogist.infer(posts.post1, posts.post2);
 		}
 
 	}

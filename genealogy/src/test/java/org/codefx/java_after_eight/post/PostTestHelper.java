@@ -1,11 +1,13 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight.post;
+
+import org.codefx.java_after_eight.post.article.Article;
 
 import java.time.LocalDate;
 import java.util.stream.Stream;
 
-public class ArticleTestHelper {
+public class PostTestHelper {
 
-	public static Article createWithSlug(String slug) {
+	public static Post createWithSlug(String slug) {
 		return new Article(
 				Title.from("Title"),
 				Tag.from("[Tag]"),

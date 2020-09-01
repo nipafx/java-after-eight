@@ -1,4 +1,4 @@
-package org.codefx.java_after_eight.article;
+package org.codefx.java_after_eight.post;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -18,7 +18,7 @@ public class Tag {
 			throw new IllegalArgumentException("Tags can't have an empty text.");
 	}
 
-	static Set<Tag> from(String tagsText) {
+	public static Set<Tag> from(String tagsText) {
 		Set<Tag> tags = Stream.of(tagsText
 				.replaceAll("^\\[|\\]$", "")
 				.split(","))
