@@ -41,6 +41,8 @@ public class Genealogy {
 	}
 
 	private Stream<TypedRelation> inferTypedRelations() {
+		record Posts(Post post1, Post post2) { }
+		record PostResearch(Genealogist genealogist, Posts posts) { }
 		return posts.stream()
 				.flatMap(post1 -> posts.stream()
 						.map(post2 -> new Posts(post1, post2)))
@@ -48,35 +50,8 @@ public class Genealogy {
 				.filter(posts -> posts.post1 != posts.post2)
 				.flatMap(posts -> genealogists.stream()
 						.map(genealogist -> new PostResearch(genealogist, posts)))
-				.map(PostResearch::infer);
-	}
-
-	private static class Posts {
-
-		final Post post1;
-		final Post post2;
-
-		Posts(Post post1, Post post2) {
-			this.post1 = post1;
-			this.post2 = post2;
-		}
-
-	}
-
-	private static class PostResearch {
-
-		final Genealogist genealogist;
-		final Posts posts;
-
-		PostResearch(Genealogist genealogist, Posts posts) {
-			this.genealogist = genealogist;
-			this.posts = posts;
-		}
-
-		TypedRelation infer() {
-			return genealogist.infer(posts.post1, posts.post2);
-		}
-
+				.map(research -> research.genealogist()
+						.infer(research.posts().post1(), research.posts().post2()));
 	}
 
 }

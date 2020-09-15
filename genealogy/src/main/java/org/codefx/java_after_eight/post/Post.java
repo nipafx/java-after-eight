@@ -1,13 +1,13 @@
 package org.codefx.java_after_eight.post;
 
 import java.time.LocalDate;
-import java.util.stream.Stream;
+import java.util.Set;
 
 public interface Post {
 
 	Title title();
 
-	Stream<Tag> tags();
+	Set<Tag> tags();
 
 	LocalDate date();
 

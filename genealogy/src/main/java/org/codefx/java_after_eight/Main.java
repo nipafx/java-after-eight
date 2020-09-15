@@ -14,6 +14,7 @@ import org.codefx.java_after_eight.recommendation.Recommender;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
@@ -40,7 +41,7 @@ public class Main {
 	}
 
 	private static Genealogy createGenealogy(Path articleFolder, Path talkFolder, Path videoFolder) {
-		var posts = concat(
+		List<Post> posts = concat(
 				markdownFilesIn(articleFolder).map(ArticleFactory::createArticle),
 				markdownFilesIn(talkFolder).map(TalkFactory::createTalk),
 				markdownFilesIn(videoFolder).map(VideoFactory::createVideo)
@@ -86,7 +87,7 @@ public class Main {
 		var recs = recommendations
 				.map(rec -> {
 					String posts = rec
-							.recommendedPosts()
+							.recommendedPosts().stream()
 							.map(recArt -> recArt.title().text())
 							.map(recTitle -> recommendedPost.replace("$TITLE", recTitle))
 							.collect(joining(",\n"));

@@ -7,33 +7,38 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-public class Config {
+public record Config(
+		Path articleFolder,
+		Path talkFolder,
+		Path videoFolder,
+		Optional<Path> outputFile) {
 
 	private static final String CONFIG_FILE_NAME = "recommendations.config";
 
-	private final Path articleFolder;
-	private final Path talkFolder;
-	private final Path videoFolder;
-	private final Optional<Path> outputFile;
+	// use static factory method(s)
+	@Deprecated
+	public Config { }
 
-	private Config(String[] raw) {
+	private static Config fromRawConfig(String[] raw) {
 		if (raw.length == 0)
 			throw new IllegalArgumentException("No article path defined.");
 
-		this.articleFolder = readFolder(raw[0]);
-		this.talkFolder = readFolder(raw[1]);
-		this.videoFolder = readFolder(raw[2]);
+		var articleFolder = readFolder(raw[0]);
+		var talkFolder = readFolder(raw[1]);
+		var videoFolder = readFolder(raw[2]);
 
-		Optional<String> outputFile = raw.length >= 4
+		Optional<String> outputFileName = raw.length >= 4
 				? Optional.of(raw[3])
 				: Optional.empty();
-		this.outputFile = outputFile
+		var outputFile = outputFileName
 				.map(file -> Path.of(System.getProperty("user.dir")).resolve(file));
-		this.outputFile.ifPresent(file -> {
+		outputFile.ifPresent(file -> {
 			boolean notWritable = Files.exists(file) && !Files.isWritable(file);
 			if (notWritable)
-				throw new IllegalArgumentException("Output path is not writable: " + this.outputFile.get());
+				throw new IllegalArgumentException("Output path is not writable: " + outputFile.get());
 		});
+
+		return new Config(articleFolder, talkFolder, videoFolder, outputFile);
 	}
 
 	private static Path readFolder(String raw) {
@@ -45,22 +50,6 @@ public class Config {
 		return folder;
 	}
 
-	public Path articleFolder() {
-		return articleFolder;
-	}
-
-	public Path talkFolder() {
-		return talkFolder;
-	}
-
-	public Path videoFolder() {
-		return videoFolder;
-	}
-
-	public Optional<Path> outputFile() {
-		return outputFile;
-	}
-
 	public static CompletableFuture<Config> create(String[] args) {
 		CompletableFuture<String[]> rawConfig = args.length > 0
 				? CompletableFuture.completedFuture(args)
@@ -69,7 +58,7 @@ public class Config {
 				.exceptionallyAsync(__ -> new String[0]);
 
 		return rawConfig
-				.thenApply(Config::new);
+				.thenApply(Config::fromRawConfig);
 	}
 
 	private static CompletableFuture<String[]> readProjectConfig() {
