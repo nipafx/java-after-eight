@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.lang.Math.round;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 public class SillyGenealogist implements Genealogist {
 
@@ -32,7 +32,7 @@ public class SillyGenealogist implements Genealogist {
 				.text()
 				.toLowerCase()
 				.chars().boxed()
-				.collect(toSet());
+				.collect(toUnmodifiableSet());
 	}
 
 }

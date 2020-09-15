@@ -18,7 +18,7 @@ import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.codefx.java_after_eight.Utils.concat;
 
 public class Main {
@@ -44,7 +44,7 @@ public class Main {
 				markdownFilesIn(articleFolder).map(ArticleFactory::createArticle),
 				markdownFilesIn(talkFolder).map(TalkFactory::createTalk),
 				markdownFilesIn(videoFolder).map(VideoFactory::createVideo)
-		).collect(toList());
+		).collect(toUnmodifiableList());
 		Collection<Genealogist> genealogists = getGenealogists(posts);
 		return new Genealogy(posts, genealogists, Weights.allEqual());
 	}
@@ -60,7 +60,7 @@ public class Main {
 				.load(GenealogistService.class).stream()
 				.map(ServiceLoader.Provider::get)
 				.map(service -> service.procure(posts))
-				.collect(toList());
+				.collect(toUnmodifiableList());
 		if (genealogists.isEmpty())
 			throw new IllegalArgumentException("No genealogists found.");
 		return genealogists;

@@ -2,7 +2,6 @@ package org.codefx.java_after_eight.genealogy;
 
 import org.codefx.java_after_eight.genealogist.RelationType;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Weights {
@@ -11,9 +10,7 @@ public class Weights {
 	private final double defaultWeight;
 
 	public Weights(Map<RelationType, Double> weights, double defaultWeight) {
-		this.weights = new HashMap<>(weights);
-		if (this.weights.entrySet().stream().anyMatch(entry -> entry.getKey() == null || entry.getValue() == null))
-			throw new NullPointerException("Neither relation type nor weight can be null.");
+		this.weights = Map.copyOf(weights);
 		this.defaultWeight = defaultWeight;
 	}
 

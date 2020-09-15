@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class Recommendation {
 
@@ -22,7 +22,7 @@ public class Recommendation {
 	}
 
 	static Recommendation from(Post post, Stream<Post> sortedRecommendations, int perPost) {
-		var recommendations = sortedRecommendations.limit(perPost).collect(toList());
+		var recommendations = sortedRecommendations.limit(perPost).collect(toUnmodifiableList());
 		return new Recommendation(requireNonNull(post), recommendations);
 	}
 
