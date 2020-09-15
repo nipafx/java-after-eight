@@ -1,21 +1,16 @@
 package org.codefx.java_after_eight.post;
 
 import org.assertj.core.api.Assertions;
-import org.codefx.java_after_eight.post.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TagTests {
 
 	@Test
 	void emptyElementArray_emptyTag() {
-		String tagsText = "[ ]";
-		String[] expectedTags = { };
+		var tagsText = "[ ]";
+		var expectedTags = new String[] { };
 
-		Set<Tag> tags = Tag.from(tagsText);
+		var tags = Tag.from(tagsText);
 
 		Assertions.assertThat(tags)
 				.extracting(Tag::text)
@@ -24,10 +19,10 @@ class TagTests {
 
 	@Test
 	void singleElementArray_singleTag() {
-		String tagsText = "[$TAG]";
-		String[] expectedTags = { "$TAG" };
+		var tagsText = "[$TAG]";
+		var expectedTags = new String[] { "$TAG" };
 
-		Set<Tag> tags = Tag.from(tagsText);
+		var tags = Tag.from(tagsText);
 
 		Assertions.assertThat(tags)
 				.extracting(Tag::text)
@@ -36,10 +31,10 @@ class TagTests {
 
 	@Test
 	void multipleElementsArray_multipleTags() {
-		String tagsText = "[$TAG,$TOG,$TUG]";
-		String[] expectedTags = { "$TAG", "$TOG", "$TUG" };
+		var tagsText = "[$TAG,$TOG,$TUG]";
+		var expectedTags = new String[]{ "$TAG", "$TOG", "$TUG" };
 
-		Set<Tag> tags = Tag.from(tagsText);
+		var tags = Tag.from(tagsText);
 
 		Assertions.assertThat(tags)
 				.extracting(Tag::text)
@@ -48,10 +43,10 @@ class TagTests {
 
 	@Test
 	void multipleElementsArrayWithSpaces_multipleTagsWithoutSpaces() {
-		String tagsText = "[$TAG ,  $TOG , $TUG  ]";
-		String[] expectedTags = { "$TAG", "$TOG", "$TUG" };
+		var tagsText = "[$TAG ,  $TOG , $TUG  ]";
+		var expectedTags = new String[]{ "$TAG", "$TOG", "$TUG" };
 
-		Set<Tag> tags = Tag.from(tagsText);
+		var tags = Tag.from(tagsText);
 
 		Assertions.assertThat(tags)
 				.extracting(Tag::text)
@@ -60,10 +55,10 @@ class TagTests {
 
 	@Test
 	void multipleElementsArrayWithJustSpacesTag_emptyTagIsIgnored() {
-		String tagsText = "[$TAG ,  , $TUG  ]";
-		String[] expectedTags = { "$TAG", "$TUG" };
+		var tagsText = "[$TAG ,  , $TUG  ]";
+		var expectedTags = new String[]{ "$TAG", "$TUG" };
 
-		Set<Tag> tags = Tag.from(tagsText);
+		var tags = Tag.from(tagsText);
 
 		Assertions.assertThat(tags)
 				.extracting(Tag::text)
@@ -72,10 +67,10 @@ class TagTests {
 
 	@Test
 	void multipleElementsArrayWithEmptyTag_emptyTagIsIgnored() {
-		String tagsText = "[$TAG ,, $TUG  ]";
-		String[] expectedTags = { "$TAG", "$TUG" };
+		var tagsText = "[$TAG ,, $TUG  ]";
+		var expectedTags = new String[]{ "$TAG", "$TUG" };
 
-		Set<Tag> tags = Tag.from(tagsText);
+		var tags = Tag.from(tagsText);
 
 		Assertions.assertThat(tags)
 				.extracting(Tag::text)
@@ -84,10 +79,10 @@ class TagTests {
 
 	@Test
 	void multipleElementsArrayDuplicateTags_duplicateTagIsIgnored() {
-		String tagsText = "[$TAG, $TAG]";
-		String[] expectedTags = { "$TAG" };
+		var tagsText = "[$TAG, $TAG]";
+		var expectedTags = new String[]{ "$TAG" };
 
-		Set<Tag> tags = Tag.from(tagsText);
+		var tags = Tag.from(tagsText);
 
 		Assertions.assertThat(tags)
 				.extracting(Tag::text)

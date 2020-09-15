@@ -22,8 +22,8 @@ public class RepoGenealogist implements Genealogist {
 	}
 
 	private long determineScore(Post post1, Post post2) {
-		Optional<Repository> repo1 = getRepository(post1);
-		Optional<Repository> repo2 = getRepository(post2);
+		var repo1 = getRepository(post1);
+		var repo2 = getRepository(post2);
 
 		if (repo1.isPresent() != repo2.isPresent())
 			return 0;

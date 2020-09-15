@@ -36,11 +36,11 @@ class RelationTests {
 	@Test
 	void singleTypedRelation_weightOne_samePostsAndScore() {
 		int score = 60;
-		Stream<TypedRelation> typedRelations = Stream.of(
+		var typedRelations = Stream.of(
 				new TypedRelation(postA, postB, tagRelation, score)
 		);
 
-		Relation relation = Relation.aggregate(typedRelations, weights);
+		var relation = Relation.aggregate(typedRelations, weights);
 
 		assertThat(relation.post1()).isEqualTo(postA);
 		assertThat(relation.post2()).isEqualTo(postB);
@@ -49,24 +49,24 @@ class RelationTests {
 
 	@Test
 	void twoTypedRelation_weightOne_averagedScore() {
-		Stream<TypedRelation> typedRelations = Stream.of(
+		var typedRelations = Stream.of(
 				new TypedRelation(postA, postB, tagRelation, 40),
 				new TypedRelation(postA, postB, tagRelation, 80)
 		);
 
-		Relation relation = Relation.aggregate(typedRelations, weights);
+		var relation = Relation.aggregate(typedRelations, weights);
 
 		assertThat(relation.score()).isEqualTo((40 + 80) / 2);
 	}
 
 	@Test
 	void twoTypedRelation_differingWeight_weightedScore() {
-		Stream<TypedRelation> typedRelations = Stream.of(
+		var typedRelations = Stream.of(
 				new TypedRelation(postA, postB, tagRelation, 40),
 				new TypedRelation(postA, postB, linkRelation, 80)
 		);
 
-		Relation relation = Relation.aggregate(typedRelations, weights);
+		var relation = Relation.aggregate(typedRelations, weights);
 
 		double expectedScore = (40 * TAG_WEIGHT + 80 * LINK_WEIGHT) / 2;
 		assertThat(relation.score()).isEqualTo(round(expectedScore));

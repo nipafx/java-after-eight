@@ -17,9 +17,9 @@ public class SillyGenealogist implements Genealogist {
 
 	@Override
 	public TypedRelation infer(Post post1, Post post2) {
-		Set<Integer> post1Letters = titleLetters(post1);
-		Set<Integer> post2Letters = titleLetters(post2);
-		Set<Integer> intersection = new HashSet<>(post1Letters);
+		var post1Letters = titleLetters(post1);
+		var post2Letters = titleLetters(post2);
+		var intersection = new HashSet<>(post1Letters);
 		intersection.retainAll(post2Letters);
 		long score = round((100.0 * intersection.size()) / post1Letters.size());
 

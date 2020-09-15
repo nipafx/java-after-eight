@@ -38,7 +38,7 @@ public class Config {
 	}
 
 	private static Path readFolder(String raw) {
-		Path folder = Paths.get(raw);
+		var folder = Paths.get(raw);
 		if (!Files.exists(folder))
 			throw new IllegalArgumentException("Path doesn't exist: " + folder);
 		if (!Files.isDirectory(folder))
@@ -74,12 +74,12 @@ public class Config {
 	}
 
 	private static CompletableFuture<String[]> readProjectConfig() {
-		Path workingDir = Paths.get(System.getProperty("user.dir")).resolve(CONFIG_FILE_NAME);
+		var workingDir = Paths.get(System.getProperty("user.dir")).resolve(CONFIG_FILE_NAME);
 		return readConfig(workingDir);
 	}
 
 	private static CompletableFuture<String[]> readUserConfig() {
-		Path workingDir = Paths.get(System.getProperty("user.home")).resolve(CONFIG_FILE_NAME);
+		var workingDir = Paths.get(System.getProperty("user.home")).resolve(CONFIG_FILE_NAME);
 		return readConfig(workingDir);
 	}
 

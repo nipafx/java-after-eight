@@ -28,7 +28,7 @@ class RecommenderTests {
 
 	@Test
 	void forOnePost_oneRelation() {
-		Stream<Recommendation> recommendations = recommender.recommend(
+		var recommendations = recommender.recommend(
 				Stream.of(relation_AC),
 				1);
 
@@ -38,7 +38,7 @@ class RecommenderTests {
 
 	@Test
 	void forOnePost_twoRelations() {
-		Stream<Recommendation> recommendations = recommender.recommend(
+		var recommendations = recommender.recommend(
 				Stream.of(relation_AB, relation_AC),
 				1);
 
@@ -48,7 +48,7 @@ class RecommenderTests {
 
 	@Test
 	void forManyPosts_oneRelationEach() {
-		Stream<Recommendation> recommendations = recommender.recommend(
+		var recommendations = recommender.recommend(
 				Stream.of(relation_AC, relation_BC, relation_CB),
 				1);
 
@@ -61,7 +61,7 @@ class RecommenderTests {
 
 	@Test
 	void forManyPosts_twoRelationsEach() {
-		Stream<Recommendation> recommendations = recommender.recommend(
+		var recommendations = recommender.recommend(
 				Stream.of(relation_AB, relation_AC, relation_BA, relation_BC, relation_CA, relation_CB),
 				1);
 

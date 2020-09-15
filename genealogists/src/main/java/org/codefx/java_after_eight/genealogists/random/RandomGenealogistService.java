@@ -11,7 +11,7 @@ public class RandomGenealogistService implements GenealogistService {
 
 	@Override
 	public Genealogist procure(Collection<Post> posts) {
-		Random random = new Random();
+		var random = new Random();
 		return new RandomGenealogist(random);
 	}
 

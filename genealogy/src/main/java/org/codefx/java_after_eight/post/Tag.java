@@ -19,7 +19,7 @@ public class Tag {
 	}
 
 	public static Set<Tag> from(String tagsText) {
-		Set<Tag> tags = Stream.of(tagsText
+		var tags = Stream.of(tagsText
 				.replaceAll("^\\[|\\]$", "")
 				.split(","))
 				.map(String::trim)

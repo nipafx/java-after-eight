@@ -12,7 +12,7 @@ public class Description {
 
 	public Description(String text) {
 		requireNonNull(text);
-		String unquotedText = Utils.removeOuterQuotationMarks(text).trim();
+		var unquotedText = Utils.removeOuterQuotationMarks(text).trim();
 		if (unquotedText.isEmpty())
 			throw new IllegalArgumentException("Description can't have an empty text.");
 		this.text = unquotedText;

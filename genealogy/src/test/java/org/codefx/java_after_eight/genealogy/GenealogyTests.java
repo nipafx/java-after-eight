@@ -89,12 +89,12 @@ class GenealogyTests {
 
 	@Test
 	void oneGenealogist_twoPosts() {
-		Genealogy genealogy = new Genealogy(
+		var genealogy = new Genealogy(
 				List.of(postA, postB),
 				List.of(tagGenealogist),
 				weights);
 
-		Stream<Relation> relations = genealogy.inferRelations();
+		var relations = genealogy.inferRelations();
 
 		assertThat(relations).containsExactlyInAnyOrder(
 				new Relation(postA, postB, round(TAG_SCORE_A_B * TAG_WEIGHT)),
@@ -104,12 +104,12 @@ class GenealogyTests {
 
 	@Test
 	void otherGenealogist_twoPosts() {
-		Genealogy genealogy = new Genealogy(
+		var genealogy = new Genealogy(
 				List.of(postA, postB),
 				List.of(linkGenealogist),
 				weights);
 
-		Stream<Relation> relations = genealogy.inferRelations();
+		var relations = genealogy.inferRelations();
 
 		assertThat(relations).containsExactlyInAnyOrder(
 				new Relation(postA, postB, round(LINK_SCORE_A_B * LINK_WEIGHT)),
@@ -119,12 +119,12 @@ class GenealogyTests {
 
 	@Test
 	void oneGenealogist_threePosts() {
-		Genealogy genealogy = new Genealogy(
+		var genealogy = new Genealogy(
 				List.of(postA, postB, postC),
 				List.of(tagGenealogist),
 				weights);
 
-		Stream<Relation> relations = genealogy.inferRelations();
+		var relations = genealogy.inferRelations();
 
 		assertThat(relations).containsExactlyInAnyOrder(
 				new Relation(postA, postB, round(TAG_SCORE_A_B * TAG_WEIGHT)),
@@ -138,12 +138,12 @@ class GenealogyTests {
 
 	@Test
 	void twoGenealogists_threePosts() {
-		Genealogy genealogy = new Genealogy(
+		var genealogy = new Genealogy(
 				List.of(postA, postB, postC),
 				List.of(tagGenealogist, linkGenealogist),
 				weights);
 
-		Stream<Relation> relations = genealogy.inferRelations();
+		var relations = genealogy.inferRelations();
 
 		assertThat(relations).containsExactlyInAnyOrder(
 				new Relation(postA, postB, round((TAG_SCORE_A_B * TAG_WEIGHT + LINK_SCORE_A_B * LINK_WEIGHT) / 2)),

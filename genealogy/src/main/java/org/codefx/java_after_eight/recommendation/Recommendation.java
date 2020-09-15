@@ -22,7 +22,7 @@ public class Recommendation {
 	}
 
 	static Recommendation from(Post post, Stream<Post> sortedRecommendations, int perPost) {
-		List<Post> recommendations = sortedRecommendations.limit(perPost).collect(toList());
+		var recommendations = sortedRecommendations.limit(perPost).collect(toList());
 		return new Recommendation(requireNonNull(post), recommendations);
 	}
 
