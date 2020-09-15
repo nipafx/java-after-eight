@@ -3,7 +3,7 @@ package org.codefx.java_after_eight.post;
 import java.time.LocalDate;
 import java.util.Set;
 
-public interface Post {
+public sealed interface Post permits Article, Talk, Video {
 
 	Title title();
 
