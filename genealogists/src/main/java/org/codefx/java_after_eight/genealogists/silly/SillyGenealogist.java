@@ -1,9 +1,9 @@
 package org.codefx.java_after_eight.genealogists.silly;
 
-import org.codefx.java_after_eight.post.Post;
 import org.codefx.java_after_eight.genealogist.Genealogist;
 import org.codefx.java_after_eight.genealogist.RelationType;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
+import org.codefx.java_after_eight.post.Post;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,2 +1,4 @@
+# org.codefx.java_after_eight.genealogists.repo.RepoGenealogist
 # org.codefx.java_after_eight.genealogists.silly.SillyGenealogistService
 org.codefx.java_after_eight.genealogists.tags.TagGenealogistService
+# org.codefx.java_after_eight.genealogists.type.TypeGenealogist
