@@ -1,12 +1,4 @@
-package org.codefx.java_after_eight.post.article;
-
-import org.codefx.java_after_eight.post.Content;
-import org.codefx.java_after_eight.post.Description;
-import org.codefx.java_after_eight.post.Post;
-import org.codefx.java_after_eight.post.Repository;
-import org.codefx.java_after_eight.post.Slug;
-import org.codefx.java_after_eight.post.Tag;
-import org.codefx.java_after_eight.post.Title;
+package org.codefx.java_after_eight.post;
 
 import java.time.LocalDate;
 import java.util.Objects;

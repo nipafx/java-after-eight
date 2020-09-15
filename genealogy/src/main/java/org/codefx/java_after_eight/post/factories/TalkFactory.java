@@ -1,11 +1,9 @@
-package org.codefx.java_after_eight.post.talk;
+package org.codefx.java_after_eight.post.factories;
 
 import org.codefx.java_after_eight.post.Description;
-import org.codefx.java_after_eight.post.PostFactory;
-import org.codefx.java_after_eight.post.PostFactory.RawFrontMatter;
-import org.codefx.java_after_eight.post.PostFactory.RawPost;
 import org.codefx.java_after_eight.post.Slug;
 import org.codefx.java_after_eight.post.Tag;
+import org.codefx.java_after_eight.post.Talk;
 import org.codefx.java_after_eight.post.Title;
 import org.codefx.java_after_eight.post.VideoSlug;
 
@@ -14,13 +12,13 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-import static org.codefx.java_after_eight.post.PostFactory.DATE;
-import static org.codefx.java_after_eight.post.PostFactory.DESCRIPTION;
-import static org.codefx.java_after_eight.post.PostFactory.SLIDES;
-import static org.codefx.java_after_eight.post.PostFactory.SLUG;
-import static org.codefx.java_after_eight.post.PostFactory.TAGS;
-import static org.codefx.java_after_eight.post.PostFactory.TITLE;
-import static org.codefx.java_after_eight.post.PostFactory.VIDEO;
+import static org.codefx.java_after_eight.post.factories.PostFactory.DATE;
+import static org.codefx.java_after_eight.post.factories.PostFactory.DESCRIPTION;
+import static org.codefx.java_after_eight.post.factories.PostFactory.SLIDES;
+import static org.codefx.java_after_eight.post.factories.PostFactory.SLUG;
+import static org.codefx.java_after_eight.post.factories.PostFactory.TAGS;
+import static org.codefx.java_after_eight.post.factories.PostFactory.TITLE;
+import static org.codefx.java_after_eight.post.factories.PostFactory.VIDEO;
 
 public final class TalkFactory {
 

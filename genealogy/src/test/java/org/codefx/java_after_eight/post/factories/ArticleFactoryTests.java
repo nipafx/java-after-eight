@@ -1,5 +1,6 @@
-package org.codefx.java_after_eight.post.article;
+package org.codefx.java_after_eight.post.factories;
 
+import org.codefx.java_after_eight.post.Article;
 import org.codefx.java_after_eight.post.Post;
 import org.codefx.java_after_eight.post.Tag;
 import org.junit.jupiter.api.Test;
@@ -72,7 +73,7 @@ class ArticleFactoryTests {
 				"Duis aute irure dolor in reprehenderit.",
 				"Excepteur sint occaecat cupidatat non proident.");
 
-		org.codefx.java_after_eight.post.article.Article article = ArticleFactory.createArticle(file);
+		Article article = ArticleFactory.createArticle(file);
 
 		assertThat(article.title().text()).isEqualTo("A cool blog post");
 		assertThat(article.tags()).extracting(Tag::text).containsExactlyInAnyOrder("$TAG", "$TOG");

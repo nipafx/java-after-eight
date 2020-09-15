@@ -57,6 +57,7 @@ public final class Utils {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <ELEMENT> Stream<ELEMENT> concat(Stream<? extends ELEMENT>... streams) {
 		return Stream.of(streams).flatMap(s -> s);
 	}

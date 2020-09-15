@@ -1,17 +1,17 @@
-package org.codefx.java_after_eight.post;
+package org.codefx.java_after_eight.post.factories;
 
 import org.codefx.java_after_eight.Utils;
+import org.codefx.java_after_eight.post.Content;
 
 import java.nio.file.Path;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toMap;
 
-public final class PostFactory {
+final class PostFactory {
 
 	public static final String DATE = "date";
 	public static final String DESCRIPTION = "description";
@@ -43,7 +43,7 @@ public final class PostFactory {
 		return new RawPost(frontMatter, content);
 	}
 
-	static RawFrontMatter extractFrontMatter(List<String> fileLines) {
+	private static RawFrontMatter extractFrontMatter(List<String> fileLines) {
 		List<String> frontMatterLines = readFrontMatter(fileLines);
 		Map<String, String> frontMatter = frontMatterLines.stream()
 				.map(PostFactory::keyValuePairFrom)
@@ -92,45 +92,6 @@ public final class PostFactory {
 				content.add(line);
 		}
 		return content;
-	}
-
-	public static class RawPost {
-
-		private final RawFrontMatter frontMatter;
-		private final Content content;
-
-		RawPost(RawFrontMatter frontMatter, Content content) {
-			this.frontMatter = frontMatter;
-			this.content = content;
-		}
-
-		public RawFrontMatter frontMatter() {
-			return frontMatter;
-		}
-
-		public Content content() {
-			return content;
-		}
-
-	}
-
-	public static class RawFrontMatter {
-
-		private final Map<String, String> lines;
-
-		RawFrontMatter(Map<String, String> lines) {
-			this.lines = lines;
-		}
-
-		public Optional<String> valueOf(String key) {
-			return Optional.ofNullable(lines.get(key));
-		}
-
-		public String requiredValueOf(String key) {
-			return valueOf(key).orElseThrow(
-					() -> new IllegalArgumentException("Required key '" + key + "' not present in front matter."));
-		}
-
 	}
 
 }

@@ -6,9 +6,9 @@ import org.codefx.java_after_eight.genealogy.Genealogy;
 import org.codefx.java_after_eight.genealogy.Relation;
 import org.codefx.java_after_eight.genealogy.Weights;
 import org.codefx.java_after_eight.post.Post;
-import org.codefx.java_after_eight.post.article.ArticleFactory;
-import org.codefx.java_after_eight.post.talk.TalkFactory;
-import org.codefx.java_after_eight.post.video.VideoFactory;
+import org.codefx.java_after_eight.post.factories.ArticleFactory;
+import org.codefx.java_after_eight.post.factories.TalkFactory;
+import org.codefx.java_after_eight.post.factories.VideoFactory;
 import org.codefx.java_after_eight.recommendation.Recommendation;
 import org.codefx.java_after_eight.recommendation.Recommender;
 
