@@ -13,12 +13,14 @@ import static java.util.stream.Collectors.toMap;
 
 public final class PostFactory {
 
-	public static final String TITLE = "title";
-	public static final String TAGS = "tags";
 	public static final String DATE = "date";
 	public static final String DESCRIPTION = "description";
+	public static final String REPOSITORY = "repo";
+	public static final String SLIDES = "slides";
 	public static final String SLUG = "slug";
-	public static final String VIDEO_URL = "video";
+	public static final String TAGS = "tags";
+	public static final String TITLE = "title";
+	public static final String VIDEO = "videoSlug";
 
 	private static final String FRONT_MATTER_SEPARATOR = "---";
 
@@ -68,7 +70,7 @@ public final class PostFactory {
 		String[] pair = line.split(":", 2);
 		if (pair.length < 2)
 			throw new IllegalArgumentException("Line doesn't seem to be a key/value pair (no colon): " + line);
-		String key = pair[0].trim().toLowerCase();
+		String key = pair[0].trim();
 		if (key.isEmpty())
 			throw new IllegalArgumentException("Line \"" + line + "\" has no key.");
 

@@ -1,13 +1,13 @@
-package org.codefx.java_after_eight.post.video;
+package org.codefx.java_after_eight.post.talk;
 
 import org.codefx.java_after_eight.post.Description;
 import org.codefx.java_after_eight.post.Post;
-import org.codefx.java_after_eight.post.Repository;
 import org.codefx.java_after_eight.post.Slug;
 import org.codefx.java_after_eight.post.Tag;
 import org.codefx.java_after_eight.post.Title;
 import org.codefx.java_after_eight.post.VideoSlug;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
-public class Video implements Post {
+public class Talk implements Post {
 
 	private final Title title;
 	private final Set<Tag> tags;
@@ -24,17 +24,17 @@ public class Video implements Post {
 	private final Description description;
 	private final Slug slug;
 
-	private final VideoSlug video;
-	private final Optional<Repository> repository;
+	private final URI slides;
+	private final Optional<VideoSlug> video;
 
-	public Video(Title title, Set<Tag> tags, LocalDate date, Description description, Slug slug, VideoSlug video, Optional<Repository> repository) {
+	public Talk(Title title, Set<Tag> tags, LocalDate date, Description description, Slug slug, URI slides, Optional<VideoSlug> video) {
 		this.title = requireNonNull(title);
 		this.tags = requireNonNull(tags);
 		this.date = requireNonNull(date);
 		this.description = requireNonNull(description);
 		this.slug = requireNonNull(slug);
+		this.slides = requireNonNull(slides);
 		this.video = requireNonNull(video);
-		this.repository = requireNonNull(repository);
 	}
 
 	@Override
@@ -62,12 +62,12 @@ public class Video implements Post {
 		return slug;
 	}
 
-	public VideoSlug video() {
-		return video;
+	public URI slides() {
+		return slides;
 	}
 
-	public Optional<Repository> repository() {
-		return repository;
+	public Optional<VideoSlug> video() {
+		return video;
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class Video implements Post {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Video video = (Video) o;
+		Talk video = (Talk) o;
 		return slug.equals(video.slug);
 	}
 
@@ -93,8 +93,8 @@ public class Video implements Post {
 				", date=" + date +
 				", description=" + description +
 				", slug=" + slug +
-				", url=" + video +
-				", repository=" + repository +
+				", slides=" + slides +
+				", video=" + video +
 				'}';
 	}
 

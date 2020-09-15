@@ -57,6 +57,10 @@ public final class Utils {
 		}
 	}
 
+	public static <ELEMENT> Stream<ELEMENT> concat(Stream<? extends ELEMENT>... streams) {
+		return Stream.of(streams).flatMap(s -> s);
+	}
+
 	public static <ELEMENT> Collector<ELEMENT, ?, Optional<ELEMENT>> collectEqualElement() {
 		return collectEqualElement(Objects::equals);
 	}

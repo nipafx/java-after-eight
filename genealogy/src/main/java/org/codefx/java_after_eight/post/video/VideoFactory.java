@@ -1,4 +1,4 @@
-package org.codefx.java_after_eight.post.article;
+package org.codefx.java_after_eight.post.video;
 
 import org.codefx.java_after_eight.post.Description;
 import org.codefx.java_after_eight.post.PostFactory;
@@ -8,10 +8,10 @@ import org.codefx.java_after_eight.post.Repository;
 import org.codefx.java_after_eight.post.Slug;
 import org.codefx.java_after_eight.post.Tag;
 import org.codefx.java_after_eight.post.Title;
+import org.codefx.java_after_eight.post.VideoSlug;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.codefx.java_after_eight.post.PostFactory.DATE;
 import static org.codefx.java_after_eight.post.PostFactory.DESCRIPTION;
@@ -19,37 +19,33 @@ import static org.codefx.java_after_eight.post.PostFactory.REPOSITORY;
 import static org.codefx.java_after_eight.post.PostFactory.SLUG;
 import static org.codefx.java_after_eight.post.PostFactory.TAGS;
 import static org.codefx.java_after_eight.post.PostFactory.TITLE;
+import static org.codefx.java_after_eight.post.PostFactory.VIDEO;
 
-public final class ArticleFactory {
+public final class VideoFactory {
 
-	private ArticleFactory() {
+	private VideoFactory() {
 		// private constructor to prevent accidental instantiation of utility class
 	}
 
-	public static Article createArticle(Path file) {
+	public static Video createVideo(Path file) {
 		try {
 			RawPost post = PostFactory.readPost(file);
-			return createArticle(post);
+			return createVideo(post);
 		} catch (RuntimeException ex) {
-			throw new RuntimeException("Creating article failed: " + file, ex);
+			throw new RuntimeException("Creating video failed: " + file, ex);
 		}
 	}
 
-	public static Article createArticle(List<String> fileLines) {
-		RawPost post = PostFactory.readPost(fileLines);
-		return createArticle(post);
-	}
-
-	private static Article createArticle(RawPost post) {
+	private static Video createVideo(RawPost post) {
 		RawFrontMatter frontMatter = post.frontMatter();
-		return new Article(
+		return new Video(
 				Title.from(frontMatter.requiredValueOf(TITLE)),
 				Tag.from(frontMatter.requiredValueOf(TAGS)),
 				LocalDate.parse(frontMatter.requiredValueOf(DATE)),
 				Description.from(frontMatter.requiredValueOf(DESCRIPTION)),
 				Slug.from(frontMatter.requiredValueOf(SLUG)),
-				frontMatter.valueOf(REPOSITORY).map(Repository::from),
-				post.content());
+				VideoSlug.from(frontMatter.requiredValueOf(VIDEO)),
+				frontMatter.valueOf(REPOSITORY).map(Repository::from));
 	}
 
 }

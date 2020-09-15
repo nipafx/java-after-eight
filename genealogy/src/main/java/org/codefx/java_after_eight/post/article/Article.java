@@ -3,12 +3,14 @@ package org.codefx.java_after_eight.post.article;
 import org.codefx.java_after_eight.post.Content;
 import org.codefx.java_after_eight.post.Description;
 import org.codefx.java_after_eight.post.Post;
+import org.codefx.java_after_eight.post.Repository;
 import org.codefx.java_after_eight.post.Slug;
 import org.codefx.java_after_eight.post.Tag;
 import org.codefx.java_after_eight.post.Title;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -21,14 +23,17 @@ public class Article implements Post {
 	private final LocalDate date;
 	private final Description description;
 	private final Slug slug;
+
+	private final Optional<Repository> repository;
 	private final Content content;
 
-	public Article(Title title, Set<Tag> tags, LocalDate date, Description description, Slug slug, Content content) {
+	public Article(Title title, Set<Tag> tags, LocalDate date, Description description, Slug slug, Optional<Repository> repository, Content content) {
 		this.title = requireNonNull(title);
 		this.tags = requireNonNull(tags);
 		this.date = requireNonNull(date);
 		this.description = requireNonNull(description);
 		this.slug = requireNonNull(slug);
+		this.repository = requireNonNull(repository);
 		this.content = requireNonNull(content);
 	}
 
@@ -55,6 +60,10 @@ public class Article implements Post {
 	@Override
 	public Slug slug() {
 		return slug;
+	}
+
+	public Optional<Repository> repository() {
+		return repository;
 	}
 
 	public Content content() {
@@ -84,6 +93,7 @@ public class Article implements Post {
 				", date=" + date +
 				", description=" + description +
 				", slug=" + slug +
+				", repository=" + repository +
 				'}';
 	}
 

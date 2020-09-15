@@ -7,6 +7,8 @@ import org.codefx.java_after_eight.genealogy.Relation;
 import org.codefx.java_after_eight.genealogy.Weights;
 import org.codefx.java_after_eight.post.Post;
 import org.codefx.java_after_eight.post.article.ArticleFactory;
+import org.codefx.java_after_eight.post.talk.TalkFactory;
+import org.codefx.java_after_eight.post.video.VideoFactory;
 import org.codefx.java_after_eight.recommendation.Recommendation;
 import org.codefx.java_after_eight.recommendation.Recommender;
 
@@ -20,6 +22,7 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
+import static org.codefx.java_after_eight.Utils.concat;
 
 public class Main {
 
@@ -27,7 +30,7 @@ public class Main {
 		System.out.println(ProcessDetails.details());
 
 		Config config = Config.create(args).join();
-		Genealogy genealogy = createGenealogy(config.articleFolder());
+		Genealogy genealogy = createGenealogy(config.articleFolder(), config.talkFolder(), config.videoFolder());
 		Recommender recommender = new Recommender();
 
 		Stream<Relation> relations = genealogy.inferRelations();
@@ -40,14 +43,20 @@ public class Main {
 			System.out.println(recommendationsAsJson);
 	}
 
-	private static Genealogy createGenealogy(Path articleFolder) {
-		List<Post> posts = Utils.uncheckedFilesList(articleFolder)
-				.filter(Files::isRegularFile)
-				.filter(file -> file.toString().endsWith(".md"))
-				.map(ArticleFactory::createArticle)
-				.collect(toList());
+	private static Genealogy createGenealogy(Path articleFolder, Path talkFolder, Path videoFolder) {
+		List<Post> posts = concat(
+				markdownFilesIn(articleFolder).map(ArticleFactory::createArticle),
+				markdownFilesIn(talkFolder).map(TalkFactory::createTalk),
+				markdownFilesIn(videoFolder).map(VideoFactory::createVideo)
+		).collect(toList());
 		Collection<Genealogist> genealogists = getGenealogists(posts);
 		return new Genealogy(posts, genealogists, Weights.allEqual());
+	}
+
+	private static Stream<Path> markdownFilesIn(Path folder) {
+		return Utils.uncheckedFilesList(folder)
+				.filter(Files::isRegularFile)
+				.filter(file -> file.toString().endsWith(".md"));
 	}
 
 	private static Collection<Genealogist> getGenealogists(Collection<Post> posts) {

@@ -13,20 +13,20 @@ public class Config {
 	private static final String CONFIG_FILE_NAME = ".recs.config";
 
 	private final Path articleFolder;
+	private final Path talkFolder;
+	private final Path videoFolder;
 	private final Optional<Path> outputFile;
 
 	private Config(String[] raw) {
 		if (raw.length == 0)
 			throw new IllegalArgumentException("No article path defined.");
 
-		this.articleFolder = Paths.get(raw[0]);
-		if (!Files.exists(articleFolder))
-			throw new IllegalArgumentException("Article path doesn't exist: " + articleFolder);
-		if (!Files.isDirectory(articleFolder))
-			throw new IllegalArgumentException("Article path is no directory: " + articleFolder);
+		this.articleFolder = readFolder(raw[0]);
+		this.talkFolder = readFolder(raw[1]);
+		this.videoFolder = readFolder(raw[2]);
 
-		Optional<String> outputFile = raw.length >= 2
-				? Optional.of(raw[1])
+		Optional<String> outputFile = raw.length >= 4
+				? Optional.of(raw[3])
 				: Optional.empty();
 		this.outputFile = outputFile
 				.map(file -> Paths.get(System.getProperty("user.dir")).resolve(file));
@@ -37,8 +37,25 @@ public class Config {
 		});
 	}
 
+	private static Path readFolder(String raw) {
+		Path folder = Paths.get(raw);
+		if (!Files.exists(folder))
+			throw new IllegalArgumentException("Path doesn't exist: " + folder);
+		if (!Files.isDirectory(folder))
+			throw new IllegalArgumentException("Path is no directory: " + folder);
+		return folder;
+	}
+
 	public Path articleFolder() {
 		return articleFolder;
+	}
+
+	public Path talkFolder() {
+		return talkFolder;
+	}
+
+	public Path videoFolder() {
+		return videoFolder;
 	}
 
 	public Optional<Path> outputFile() {
