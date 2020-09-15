@@ -29,7 +29,7 @@ public class Config {
 				? Optional.of(raw[3])
 				: Optional.empty();
 		this.outputFile = outputFile
-				.map(file -> Paths.get(System.getProperty("user.dir")).resolve(file));
+				.map(file -> Path.of(System.getProperty("user.dir")).resolve(file));
 		this.outputFile.ifPresent(file -> {
 			boolean notWritable = Files.exists(file) && !Files.isWritable(file);
 			if (notWritable)
@@ -38,7 +38,7 @@ public class Config {
 	}
 
 	private static Path readFolder(String raw) {
-		var folder = Paths.get(raw);
+		var folder = Path.of(raw);
 		if (!Files.exists(folder))
 			throw new IllegalArgumentException("Path doesn't exist: " + folder);
 		if (!Files.isDirectory(folder))
@@ -74,12 +74,12 @@ public class Config {
 	}
 
 	private static CompletableFuture<String[]> readProjectConfig() {
-		var workingDir = Paths.get(System.getProperty("user.dir")).resolve(CONFIG_FILE_NAME);
+		var workingDir = Path.of(System.getProperty("user.dir")).resolve(CONFIG_FILE_NAME);
 		return readConfig(workingDir);
 	}
 
 	private static CompletableFuture<String[]> readUserConfig() {
-		var workingDir = Paths.get(System.getProperty("user.home")).resolve(CONFIG_FILE_NAME);
+		var workingDir = Path.of(System.getProperty("user.home")).resolve(CONFIG_FILE_NAME);
 		return readConfig(workingDir);
 	}
 
