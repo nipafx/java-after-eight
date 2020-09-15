@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toMap;
 
 final class PostFactory {
@@ -53,9 +54,10 @@ final class PostFactory {
 
 	private static Stream<String> readFrontMatter(List<String> markdownFile) {
 		return markdownFile.stream()
-				.dropWhile(line -> !line.strip().equals(FRONT_MATTER_SEPARATOR))
+				.map(String::strip)
+				.dropWhile(not(FRONT_MATTER_SEPARATOR::equals))
 				.skip(1)
-				.takeWhile(line -> !line.strip().equals(FRONT_MATTER_SEPARATOR));
+				.takeWhile(not(FRONT_MATTER_SEPARATOR::equals));
 	}
 
 	private static Map.Entry<String, String> keyValuePairFrom(String line) {
