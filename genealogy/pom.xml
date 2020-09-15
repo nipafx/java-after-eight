@@ -19,6 +19,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>
+						--enable-preview
 						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight=ALL-UNNAMED
 						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.post=ALL-UNNAMED
 						--add-opens=org.codefx.java_after_eight.genealogy/org.codefx.java_after_eight.post.factories=ALL-UNNAMED

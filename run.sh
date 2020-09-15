@@ -1,1 +1,1 @@
-java -XX:+ShowCodeDetailsInExceptionMessages -p jars -m org.codefx.java_after_eight.genealogy
+java --enable-preview -XX:+ShowCodeDetailsInExceptionMessages -p jars -m org.codefx.java_after_eight.genealogy
