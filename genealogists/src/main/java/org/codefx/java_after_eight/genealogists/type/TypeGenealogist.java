@@ -11,18 +11,12 @@ public class TypeGenealogist implements Genealogist {
 
 	@Override
 	public TypedRelation infer(Post post1, Post post2) {
-		long score = 0;
-		switch (post2.getClass().getSimpleName()) {
-			case "Article":
-				score = 50;
-				break;
-			case "Video":
-				score = 90;
-				break;
-			case "Talk":
-				score = 20;
-				break;
-		}
+		long score = switch (post2.getClass().getSimpleName()) {
+			case "Article" -> 50;
+			case "Video" -> 90;
+			case "Talk" -> 20;
+			default -> 0;
+		};
 
 		return new TypedRelation(post1, post2, TYPE, score);
 	}
