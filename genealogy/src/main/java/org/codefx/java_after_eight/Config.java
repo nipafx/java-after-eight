@@ -86,7 +86,7 @@ public class Config {
 	private static CompletableFuture<String[]> readConfig(Path workingDir) {
 		return CompletableFuture.supplyAsync(() -> {
 			try {
-				return Files.readAllLines(workingDir).toArray(new String[0]);
+				return Files.readAllLines(workingDir).toArray(String[]::new);
 			} catch (IOException ex) {
 				throw new UncheckedIOException(ex);
 			}
