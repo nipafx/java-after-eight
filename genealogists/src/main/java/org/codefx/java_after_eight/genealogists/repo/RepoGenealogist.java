@@ -28,7 +28,7 @@ public class RepoGenealogist implements Genealogist {
 		if (repo1.isPresent() != repo2.isPresent())
 			return 0;
 		// at this point, either both are empty or both are non-empty
-		if (!repo1.isPresent())
+		if (repo1.isEmpty())
 			return 20;
 		return Objects.equals(repo1, repo2) ? 100 : 50;
 	}
