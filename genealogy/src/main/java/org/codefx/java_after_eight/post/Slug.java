@@ -10,7 +10,7 @@ public class Slug implements Comparable<Slug> {
 
 	public Slug(String value) {
 		this.value = requireNonNull(value);
-		if (value.isEmpty())
+		if (value.isBlank())
 			throw new IllegalArgumentException("Slugs can't have an empty value.");
 	}
 

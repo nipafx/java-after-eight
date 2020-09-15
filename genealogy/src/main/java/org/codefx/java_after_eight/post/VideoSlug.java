@@ -10,7 +10,7 @@ public class VideoSlug implements Comparable<VideoSlug> {
 
 	public VideoSlug(String value) {
 		this.value = requireNonNull(value);
-		if (value.isEmpty())
+		if (value.isBlank())
 			throw new IllegalArgumentException("Slugs can't have an empty value.");
 	}
 

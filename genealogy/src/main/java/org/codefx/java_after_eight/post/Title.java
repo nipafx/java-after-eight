@@ -13,7 +13,7 @@ public class Title {
 	public Title(String text) {
 		requireNonNull(text);
 		var unquotedText = Utils.removeOuterQuotationMarks(text);
-		if (unquotedText.isEmpty())
+		if (unquotedText.isBlank())
 			throw new IllegalArgumentException("Titles can't have an empty text.");
 		this.text = unquotedText;
 	}

@@ -53,28 +53,28 @@ final class PostFactory {
 
 	private static Stream<String> readFrontMatter(List<String> markdownFile) {
 		return markdownFile.stream()
-				.dropWhile(line -> !line.trim().equals(FRONT_MATTER_SEPARATOR))
+				.dropWhile(line -> !line.strip().equals(FRONT_MATTER_SEPARATOR))
 				.skip(1)
-				.takeWhile(line -> !line.trim().equals(FRONT_MATTER_SEPARATOR));
+				.takeWhile(line -> !line.strip().equals(FRONT_MATTER_SEPARATOR));
 	}
 
 	private static Map.Entry<String, String> keyValuePairFrom(String line) {
 		String[] pair = line.split(":", 2);
 		if (pair.length < 2)
 			throw new IllegalArgumentException("Line doesn't seem to be a key/value pair (no colon): " + line);
-		String key = pair[0].trim();
-		if (key.isEmpty())
+		String key = pair[0].strip();
+		if (key.isBlank())
 			throw new IllegalArgumentException("Line \"" + line + "\" has no key.");
 
-		String value = pair[1].trim();
+		String value = pair[1].strip();
 		return new AbstractMap.SimpleImmutableEntry<>(key, value);
 	}
 
 	private static Stream<String> extractContent(List<String> markdownFile) {
 		return markdownFile.stream()
-				.dropWhile(line -> !line.trim().equals(FRONT_MATTER_SEPARATOR))
+				.dropWhile(line -> !line.strip().equals(FRONT_MATTER_SEPARATOR))
 				.skip(1)
-				.dropWhile(line -> !line.trim().equals(FRONT_MATTER_SEPARATOR))
+				.dropWhile(line -> !line.strip().equals(FRONT_MATTER_SEPARATOR))
 				.skip(1);
 	}
 

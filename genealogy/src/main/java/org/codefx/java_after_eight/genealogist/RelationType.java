@@ -13,7 +13,7 @@ public class RelationType {
 
 	public RelationType(String value) {
 		this.value = requireNonNull(value);
-		if (value.isEmpty())
+		if (value.isBlank())
 			throw new IllegalArgumentException("Relation types can't have an empty value.");
 	}
 
