@@ -18,7 +18,7 @@ public record Recommendation(
 	}
 
 	static Recommendation from(Post post, Stream<Post> sortedRecommendations, int perPost) {
-		var recommendations = sortedRecommendations.limit(perPost).collect(toUnmodifiableList());
+		var recommendations = sortedRecommendations.limit(perPost).toList();
 		return new Recommendation(requireNonNull(post), recommendations);
 	}
 

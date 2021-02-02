@@ -42,10 +42,10 @@ public class Main {
 
 	private static Genealogy createGenealogy(Path articleFolder, Path talkFolder, Path videoFolder) {
 		List<Post> posts = concat(
-				markdownFilesIn(articleFolder).map(ArticleFactory::createArticle),
+				markdownFilesIn(articleFolder).<Post>map(ArticleFactory::createArticle),
 				markdownFilesIn(talkFolder).map(TalkFactory::createTalk),
 				markdownFilesIn(videoFolder).map(VideoFactory::createVideo)
-		).collect(toUnmodifiableList());
+		).toList();
 		Collection<Genealogist> genealogists = getGenealogists(posts);
 		return new Genealogy(posts, genealogists, Weights.allEqual());
 	}
@@ -61,7 +61,7 @@ public class Main {
 				.load(GenealogistService.class).stream()
 				.map(ServiceLoader.Provider::get)
 				.map(service -> service.procure(posts))
-				.collect(toUnmodifiableList());
+				.toList();
 		if (genealogists.isEmpty())
 			throw new IllegalArgumentException("No genealogists found.");
 		return genealogists;
