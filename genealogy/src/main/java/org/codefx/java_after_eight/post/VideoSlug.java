@@ -8,15 +8,10 @@ public class VideoSlug implements Comparable<VideoSlug> {
 
 	private final String value;
 
-	private VideoSlug(String value) {
-		this.value = value;
-	}
-
-	public static VideoSlug from(String value) {
-		requireNonNull(value);
+	public VideoSlug(String value) {
+		this.value = requireNonNull(value);
 		if (value.isEmpty())
 			throw new IllegalArgumentException("Slugs can't have an empty value.");
-		return new VideoSlug(value);
 	}
 
 	public String value() {

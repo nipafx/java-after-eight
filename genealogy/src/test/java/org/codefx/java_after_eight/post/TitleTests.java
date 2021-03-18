@@ -1,7 +1,6 @@
 package org.codefx.java_after_eight.post;
 
 import org.codefx.java_after_eight.TextParserTests;
-import org.codefx.java_after_eight.post.Title;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ class TitleTests {
 
 	@Test
 	void emptyText_exception() {
-		assertThatThrownBy(() -> Title.from("")).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> new Title("")).isInstanceOf(IllegalArgumentException.class);
 	}
 
 
@@ -20,7 +19,7 @@ class TitleTests {
 
 		@Override
 		public String parseCreateExtract(String text) {
-			return Title.from(text).text();
+			return new Title(text).text();
 		}
 
 	}

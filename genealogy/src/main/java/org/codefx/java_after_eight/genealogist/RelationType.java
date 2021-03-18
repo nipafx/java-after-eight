@@ -11,15 +11,10 @@ public class RelationType {
 
 	private final String value;
 
-	private RelationType(String value) {
-		this.value = value;
-	}
-
-	public static RelationType from(String value) {
-		requireNonNull(value);
+	public RelationType(String value) {
+		this.value = requireNonNull(value);
 		if (value.isEmpty())
 			throw new IllegalArgumentException("Relation types can't have an empty value.");
-		return new RelationType(value);
 	}
 
 	public String value() {

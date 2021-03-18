@@ -10,16 +10,12 @@ public class Title {
 
 	private final String text;
 
-	private Title(String text) {
-		this.text = text;
-	}
-
-	public static Title from(String text) {
+	public Title(String text) {
 		requireNonNull(text);
-		String unquotedText = Utils.removeOuterQuotationMarks(text);
+		String unquotedText = Utils.removeOuterQuotationMarks(text).trim();
 		if (unquotedText.isEmpty())
 			throw new IllegalArgumentException("Titles can't have an empty text.");
-		return new Title(unquotedText);
+		this.text = unquotedText;
 	}
 
 	public String text() {

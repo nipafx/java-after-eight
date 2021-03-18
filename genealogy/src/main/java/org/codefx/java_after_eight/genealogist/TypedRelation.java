@@ -13,21 +13,13 @@ public class TypedRelation {
 	private final RelationType type;
 	private final long score;
 
-	private TypedRelation(Post post1, Post post2, RelationType type, long score) {
-		this.post1 = post1;
-		this.post2 = post2;
-		this.type = type;
+	public TypedRelation(Post post1, Post post2, RelationType type, long score) {
+		this.post1 = requireNonNull(post1);
+		this.post2 = requireNonNull(post2);
+		this.type = requireNonNull(type);
 		this.score = score;
-	}
-
-	public static TypedRelation from(Post post1, Post post2, RelationType type, long score) {
 		if (score < 0 || 100 < score)
 			throw new IllegalArgumentException("Score should be in interval [0; 100]: " + score);
-		return new TypedRelation(
-				requireNonNull(post1),
-				requireNonNull(post2),
-				requireNonNull(type),
-				score);
 	}
 
 	public Post post1() {

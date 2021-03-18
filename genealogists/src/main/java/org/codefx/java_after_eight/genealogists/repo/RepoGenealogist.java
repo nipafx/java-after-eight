@@ -3,9 +3,9 @@ package org.codefx.java_after_eight.genealogists.repo;
 import org.codefx.java_after_eight.genealogist.Genealogist;
 import org.codefx.java_after_eight.genealogist.RelationType;
 import org.codefx.java_after_eight.genealogist.TypedRelation;
+import org.codefx.java_after_eight.post.Article;
 import org.codefx.java_after_eight.post.Post;
 import org.codefx.java_after_eight.post.Repository;
-import org.codefx.java_after_eight.post.Article;
 import org.codefx.java_after_eight.post.Video;
 
 import java.util.Objects;
@@ -13,10 +13,12 @@ import java.util.Optional;
 
 public class RepoGenealogist implements Genealogist {
 
+	private static final RelationType TYPE = new RelationType("repo");
+
 	@Override
 	public TypedRelation infer(Post post1, Post post2) {
 		long score = determineScore(post1, post2);
-		return TypedRelation.from(post1, post2, RelationType.from("repo"), score);
+		return new TypedRelation(post1, post2, TYPE, score);
 	}
 
 	private long determineScore(Post post1, Post post2) {

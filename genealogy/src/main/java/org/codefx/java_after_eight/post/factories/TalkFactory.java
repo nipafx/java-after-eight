@@ -39,13 +39,13 @@ public final class TalkFactory {
 		RawFrontMatter frontMatter = post.frontMatter();
 		try {
 			return new Talk(
-					Title.from(frontMatter.requiredValueOf(TITLE)),
+					new Title(frontMatter.requiredValueOf(TITLE)),
 					Tag.from(frontMatter.requiredValueOf(TAGS)),
 					LocalDate.parse(frontMatter.requiredValueOf(DATE)),
-					Description.from(frontMatter.requiredValueOf(DESCRIPTION)),
-					Slug.from(frontMatter.requiredValueOf(SLUG)),
+					new Description(frontMatter.requiredValueOf(DESCRIPTION)),
+					new Slug(frontMatter.requiredValueOf(SLUG)),
 					new URI(frontMatter.requiredValueOf(SLIDES)),
-					frontMatter.valueOf(VIDEO).map(VideoSlug::from));
+					frontMatter.valueOf(VIDEO).map(VideoSlug::new));
 		} catch (URISyntaxException ex) {
 			throw new IllegalArgumentException(ex);
 		}

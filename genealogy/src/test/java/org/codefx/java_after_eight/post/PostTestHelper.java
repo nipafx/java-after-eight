@@ -8,11 +8,11 @@ public class PostTestHelper {
 
 	public static Post createWithSlug(String slug) {
 		return new Article(
-				Title.from("Title"),
+				new Title("Title"),
 				Tag.from("[Tag]"),
 				LocalDate.now(),
-				Description.from("description"),
-				Slug.from(slug),
+				new Description("description"),
+				new Slug(slug),
 				Optional.empty(),
 				() -> Stream.of(""));
 	}

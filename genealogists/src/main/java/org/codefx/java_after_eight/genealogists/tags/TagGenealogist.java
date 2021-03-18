@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.toSet;
 
 public class TagGenealogist implements Genealogist {
 
-	private static final RelationType TYPE = RelationType.from("tag");
+	private static final RelationType TYPE = new RelationType("tag");
 
 	@Override
 	public TypedRelation infer(Post post1, Post post2) {
@@ -24,7 +24,7 @@ public class TagGenealogist implements Genealogist {
 				.count();
 		long numberOfPost1Tags = post1.tags().count();
 		long score = round((100.0 * 2 * numberOfSharedTags) / (numberOfPost1Tags + post2Tags.size()));
-		return TypedRelation.from(post1, post2, TYPE, score);
+		return new TypedRelation(post1, post2, TYPE, score);
 	}
 
 }

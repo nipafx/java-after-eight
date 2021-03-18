@@ -41,12 +41,12 @@ public final class ArticleFactory {
 	private static Article createArticle(RawPost post) {
 		RawFrontMatter frontMatter = post.frontMatter();
 		return new Article(
-				Title.from(frontMatter.requiredValueOf(TITLE)),
+				new Title(frontMatter.requiredValueOf(TITLE)),
 				Tag.from(frontMatter.requiredValueOf(TAGS)),
 				LocalDate.parse(frontMatter.requiredValueOf(DATE)),
-				Description.from(frontMatter.requiredValueOf(DESCRIPTION)),
-				Slug.from(frontMatter.requiredValueOf(SLUG)),
-				frontMatter.valueOf(REPOSITORY).map(Repository::from),
+				new Description(frontMatter.requiredValueOf(DESCRIPTION)),
+				new Slug(frontMatter.requiredValueOf(SLUG)),
+				frontMatter.valueOf(REPOSITORY).map(Repository::new),
 				post.content());
 	}
 

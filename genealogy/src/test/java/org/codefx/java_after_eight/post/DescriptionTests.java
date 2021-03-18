@@ -1,7 +1,6 @@
 package org.codefx.java_after_eight.post;
 
 import org.codefx.java_after_eight.TextParserTests;
-import org.codefx.java_after_eight.post.Description;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +10,7 @@ class DescriptionTests {
 
 	@Test
 	void emptyText_exception() {
-		assertThatThrownBy(() -> Description.from("")).isInstanceOf(IllegalArgumentException.class);
+		assertThatThrownBy(() -> new Description("")).isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Nested
@@ -19,7 +18,7 @@ class DescriptionTests {
 
 		@Override
 		public String parseCreateExtract(String text) {
-			return Description.from(text).text();
+			return new Description(text).text();
 		}
 
 	}

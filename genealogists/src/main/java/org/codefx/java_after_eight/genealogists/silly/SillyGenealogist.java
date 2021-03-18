@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.toSet;
 
 public class SillyGenealogist implements Genealogist {
 
-	private static final RelationType TYPE = RelationType.from("silly");
+	private static final RelationType TYPE = new RelationType("silly");
 
 	@Override
 	public TypedRelation infer(Post post1, Post post2) {
@@ -23,7 +23,7 @@ public class SillyGenealogist implements Genealogist {
 		intersection.retainAll(post2Letters);
 		long score = round((100.0 * intersection.size()) / post1Letters.size());
 
-		return TypedRelation.from(post1, post2, TYPE, score);
+		return new TypedRelation(post1, post2, TYPE, score);
 	}
 
 	private static Set<Integer> titleLetters(Post post) {

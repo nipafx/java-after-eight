@@ -10,16 +10,12 @@ public class Description {
 
 	private final String text;
 
-	private Description(String text) {
-		this.text = text;
-	}
-
-	public static Description from(String text) {
+	public Description(String text) {
 		requireNonNull(text);
 		String unquotedText = Utils.removeOuterQuotationMarks(text).trim();
 		if (unquotedText.isEmpty())
 			throw new IllegalArgumentException("Description can't have an empty text.");
-		return new Description(unquotedText);
+		this.text = unquotedText;
 	}
 
 	public String text() {

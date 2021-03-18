@@ -8,15 +8,10 @@ public class Repository {
 
 	private final String identifier;
 
-	private Repository(String identifier) {
-		this.identifier = identifier;
-	}
-
-	public static Repository from(String identifier) {
-		requireNonNull(identifier);
+	public Repository(String identifier) {
+		this.identifier = requireNonNull(identifier);
 		if (identifier.isEmpty())
 			throw new IllegalArgumentException("Repositories can't have an empty identifier.");
-		return new Repository(identifier);
 	}
 
 	public String identifier() {

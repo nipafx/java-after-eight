@@ -21,8 +21,8 @@ class RelationTests {
 	private final Post postA = PostTestHelper.createWithSlug("a");
 	private final Post postB = PostTestHelper.createWithSlug("b");
 
-	private final RelationType tagRelation = RelationType.from("tag");
-	private final RelationType linkRelation = RelationType.from("link");
+	private final RelationType tagRelation = new RelationType("tag");
+	private final RelationType linkRelation = new RelationType("link");
 
 	private final Weights weights;
 
@@ -30,7 +30,7 @@ class RelationTests {
 		Map<RelationType, Double> weights = new HashMap<>();
 		weights.put(tagRelation, TAG_WEIGHT);
 		weights.put(linkRelation, LINK_WEIGHT);
-		this.weights = Weights.from(weights, 0.5);
+		this.weights = new Weights(weights, 0.5);
 	}
 
 	/*
@@ -41,7 +41,7 @@ class RelationTests {
 	void singleTypedRelation_weightOne_samePostsAndScore() {
 		int score = 60;
 		Stream<TypedRelation> typedRelations = Stream.of(
-				TypedRelation.from(postA, postB, tagRelation, score)
+				new TypedRelation(postA, postB, tagRelation, score)
 		);
 
 		Relation relation = Relation.aggregate(typedRelations, weights);
@@ -54,8 +54,8 @@ class RelationTests {
 	@Test
 	void twoTypedRelation_weightOne_averagedScore() {
 		Stream<TypedRelation> typedRelations = Stream.of(
-				TypedRelation.from(postA, postB, tagRelation, 40),
-				TypedRelation.from(postA, postB, tagRelation, 80)
+				new TypedRelation(postA, postB, tagRelation, 40),
+				new TypedRelation(postA, postB, tagRelation, 80)
 		);
 
 		Relation relation = Relation.aggregate(typedRelations, weights);
@@ -66,8 +66,8 @@ class RelationTests {
 	@Test
 	void twoTypedRelation_differingWeight_weightedScore() {
 		Stream<TypedRelation> typedRelations = Stream.of(
-				TypedRelation.from(postA, postB, tagRelation, 40),
-				TypedRelation.from(postA, postB, linkRelation, 80)
+				new TypedRelation(postA, postB, tagRelation, 40),
+				new TypedRelation(postA, postB, linkRelation, 80)
 		);
 
 		Relation relation = Relation.aggregate(typedRelations, weights);

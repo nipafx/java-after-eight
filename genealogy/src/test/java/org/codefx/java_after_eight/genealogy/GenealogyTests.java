@@ -38,13 +38,13 @@ class GenealogyTests {
 	private final Post postB = PostTestHelper.createWithSlug("b");
 	private final Post postC = PostTestHelper.createWithSlug("c");
 
-	private final RelationType tagRelation = RelationType.from("tag");
-	private final RelationType linkRelation = RelationType.from("link");
+	private final RelationType tagRelation = new RelationType("tag");
+	private final RelationType linkRelation = new RelationType("link");
 
 	private final Genealogist tagGenealogist = (Post1, Post2) ->
-			TypedRelation.from(Post1, Post2, tagRelation, tagScore(Post1, Post2));
+			new TypedRelation(Post1, Post2, tagRelation, tagScore(Post1, Post2));
 	private final Genealogist linkGenealogist = (Post1, Post2) ->
-			TypedRelation.from(Post1, Post2, linkRelation, linkScore(Post1, Post2));
+			new TypedRelation(Post1, Post2, linkRelation, linkScore(Post1, Post2));
 
 	private final Weights weights;
 
@@ -52,7 +52,7 @@ class GenealogyTests {
 		Map<RelationType, Double> weights = new HashMap<>();
 		weights.put(tagRelation, TAG_WEIGHT);
 		weights.put(linkRelation, LINK_WEIGHT);
-		this.weights = Weights.from(weights, 0.5);
+		this.weights = new Weights(weights, 0.5);
 	}
 
 	private int tagScore(Post post1, Post post2) {

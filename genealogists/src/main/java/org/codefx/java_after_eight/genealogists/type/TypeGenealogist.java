@@ -7,6 +7,8 @@ import org.codefx.java_after_eight.post.Post;
 
 public class TypeGenealogist implements Genealogist {
 
+	private static final RelationType TYPE = new RelationType("type");
+
 	@Override
 	public TypedRelation infer(Post post1, Post post2) {
 		long score = 0;
@@ -22,7 +24,7 @@ public class TypeGenealogist implements Genealogist {
 				break;
 		}
 
-		return TypedRelation.from(post1, post2, RelationType.from("type"), score);
+		return new TypedRelation(post1, post2, TYPE, score);
 	}
 
 }

@@ -8,15 +8,10 @@ public class Slug implements Comparable<Slug> {
 
 	private final String value;
 
-	private Slug(String value) {
-		this.value = value;
-	}
-
-	public static Slug from(String value) {
-		requireNonNull(value);
+	public Slug(String value) {
+		this.value = requireNonNull(value);
 		if (value.isEmpty())
 			throw new IllegalArgumentException("Slugs can't have an empty value.");
-		return new Slug(value);
 	}
 
 	public String value() {
