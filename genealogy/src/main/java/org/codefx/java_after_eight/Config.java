@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class Config {
 
-	private static final String CONFIG_FILE_NAME = ".recs.config";
+	private static final String CONFIG_FILE_NAME = "recommendations.config";
 
 	private final Path articleFolder;
 	private final Path talkFolder;
