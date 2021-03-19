@@ -46,6 +46,7 @@ final class PostFactory {
 	private static RawFrontMatter extractFrontMatter(List<String> fileLines) {
 		List<String> frontMatterLines = readFrontMatter(fileLines);
 		Map<String, String> frontMatter = frontMatterLines.stream()
+				.filter(line -> !line.startsWith("#"))
 				.map(PostFactory::keyValuePairFrom)
 				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 		return new RawFrontMatter(frontMatter);
