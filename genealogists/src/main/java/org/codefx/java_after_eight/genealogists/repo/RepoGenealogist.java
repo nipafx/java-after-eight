@@ -34,11 +34,11 @@ public class RepoGenealogist implements Genealogist {
 	}
 
 	private Optional<Repository> getRepository(Post post) {
-		if (post instanceof Article article)
-			return article.repository();
-		if (post instanceof Video video)
-			return video.repository();
-		return Optional.empty();
+		return switch (post) {
+			case Article article -> article.repository();
+			case Video video -> video.repository();
+			default -> Optional.empty();
+		};
 	}
 
 }
