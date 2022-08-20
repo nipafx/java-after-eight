@@ -8,13 +8,7 @@ import java.util.Collection;
  * Used as a service to create {@link Genealogist}s - must have a public parameterless constructor.
  *
  * <p>Intended use:
- * <pre>
- * {@code
- * Collection<Post> posts = // ... ;
- * GenealogistService service = new SpecificGenealogistService();
- * Genealogist genealogist = service.create(posts);
- * }
- * </pre>
+ * {@snippet file="GenealogistServiceDemo.java" region="creation"}
  */
 public interface GenealogistService {
 
