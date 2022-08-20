@@ -35,8 +35,8 @@ public class RepoGenealogist implements Genealogist {
 
 	private Optional<Repository> getRepository(Post post) {
 		return switch (post) {
-			case Article article -> article.repository();
-			case Video video -> video.repository();
+			case Article(var t, var ts, var d, var desc, var s, var repository, var c) -> repository;
+			case Video(var t, var ts, var d, var desc, var s, var v, var repository) -> repository;
 			default -> Optional.empty();
 		};
 	}
