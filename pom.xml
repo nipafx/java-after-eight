@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>18</maven.compiler.release>
+		<maven.compiler.release>19</maven.compiler.release>
 		<junit-jupiter-version>5.7.0</junit-jupiter-version>
 		<mockito-version>3.7.7</mockito-version>
 	</properties>
