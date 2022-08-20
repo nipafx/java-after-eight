@@ -2,7 +2,6 @@ package org.codefx.java_after_eight;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -33,7 +32,7 @@ public final class Utils {
 
 	public static <T> void uncheckedFilesWrite(Path path, String content) {
 		try {
-			Files.write(path, List.of(content), StandardCharsets.UTF_8);
+			Files.write(path, List.of(content));
 		} catch (IOException ex) {
 			throw new UncheckedIOException(ex);
 		}
@@ -41,7 +40,7 @@ public final class Utils {
 
 	public static List<String> uncheckedFilesReadAllLines(Path file) {
 		try {
-			return Files.readAllLines(file, StandardCharsets.UTF_8);
+			return Files.readAllLines(file);
 		} catch (IOException ex) {
 			throw new UncheckedIOException(ex);
 		}
@@ -49,7 +48,7 @@ public final class Utils {
 
 	public static Stream<String> uncheckedFilesLines(Path file) {
 		try {
-			return Files.lines(file, StandardCharsets.UTF_8);
+			return Files.lines(file);
 		} catch (IOException ex) {
 			throw new UncheckedIOException(ex);
 		}
