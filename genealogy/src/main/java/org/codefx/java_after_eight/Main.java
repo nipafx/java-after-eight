@@ -1,5 +1,6 @@
 package org.codefx.java_after_eight;
 
+import jdk.incubator.concurrent.StructuredTaskScope;
 import org.codefx.java_after_eight.genealogist.Genealogist;
 import org.codefx.java_after_eight.genealogist.GenealogistService;
 import org.codefx.java_after_eight.genealogy.Genealogy;
@@ -13,14 +14,15 @@ import org.codefx.java_after_eight.recommendation.Recommender;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toUnmodifiableList;
-import static org.codefx.java_after_eight.Utils.concat;
 
 public class Main {
 
@@ -41,11 +43,29 @@ public class Main {
 	}
 
 	private static Genealogy createGenealogy(Path articleFolder, Path talkFolder, Path videoFolder) {
-		List<Post> posts = concat(
-				markdownFilesIn(articleFolder).<Post>map(ArticleFactory::createArticle),
-				markdownFilesIn(talkFolder).map(TalkFactory::createTalk),
-				markdownFilesIn(videoFolder).map(VideoFactory::createVideo)
-		).toList();
+		List<Future<? extends Post>> futurePosts = new ArrayList<>();
+
+		try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+			markdownFilesIn(articleFolder)
+					.map(file -> scope.fork(() -> ArticleFactory.createArticle(file)))
+					.forEach(futurePosts::add);
+			markdownFilesIn(talkFolder)
+					.map(file -> scope.fork(() -> TalkFactory.createTalk(file)))
+					.forEach(futurePosts::add);
+			markdownFilesIn(videoFolder)
+					.map(file -> scope.fork(() -> VideoFactory.createVideo(file)))
+					.forEach(futurePosts::add);
+
+			scope.join();
+			scope.throwIfFailed();
+		} catch (ExecutionException | InterruptedException ex) {
+			// this is horrible error handling
+			throw new RuntimeException(ex);
+		}
+
+		List<Post> posts = futurePosts.stream()
+				.<Post>map(Future::resultNow)
+				.toList();
 		Collection<Genealogist> genealogists = getGenealogists(posts);
 		return new Genealogy(posts, genealogists, Weights.allEqual());
 	}
